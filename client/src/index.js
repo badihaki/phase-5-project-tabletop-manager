@@ -9,13 +9,25 @@ import {
   Route,
 } from "react-router-dom";
 import ErrorPage from './components/NotFound';
+import UserPage from './components/User';
+import NavigationBar from './components/Navigation';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />
-  }
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/nav",
+        element: <NavigationBar />,
+      },
+    ],
+  },
+  // {
+  //   path: "/user",
+  //   element: <UserPage />
+  // }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
