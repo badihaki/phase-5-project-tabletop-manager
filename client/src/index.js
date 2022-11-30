@@ -8,11 +8,13 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
+import ErrorPage from './components/NotFound';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />
+    element: <App />,
+    errorElement: <ErrorPage />
   }
 ])
 
