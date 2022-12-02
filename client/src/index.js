@@ -11,6 +11,7 @@ import {
 import ErrorPage from './components/NotFound';
 import UserPage from './components/User';
 import NavigationBar from './components/Navigation';
+import Home from './components/Home';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "/home",
+        element: <Home />
+      },
       {
         path: "/nav",
         element: <NavigationBar />,

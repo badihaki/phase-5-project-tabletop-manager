@@ -1,10 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NavigationBar(){
     return(
         <div>
-            <h1>Home</ h1>
-            <h1>User</ h1>
+            <ul>
+                <li>
+                    <Link to={"/home"}> Home </Link>
+                </li>
+                <li>
+                    <Link to={"/user"}> User </Link>
+                </li>
+            </ul>
         </div>
     )
 }
