@@ -8,5 +8,15 @@ class UsersController < ApplicationController
             # render user with created status
         # else:
             # render errors
+        user = User.create!(permitted_params)
+        render json: user, status: :created
+    rescue ActiveRecord::RecordInvalid => record
+        render json: {errors: record.record.errors}
+    end
+
+    private
+
+    def permitted_params
+        params.permit(:email, :password, :password_confirmation, :name)
     end
 end
