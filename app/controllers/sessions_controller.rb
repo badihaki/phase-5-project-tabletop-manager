@@ -20,15 +20,25 @@ class SessionsController < ApplicationController
     def show
         # use this for staying logged in
         # find the user by session[uid]
+        user = User.find(session[:uid])
         # if found:
-            # render the found user
+        # render the found user
+        if user
+            render json: user, status: :ok
+        else
+            render json: {error: "Not logged in"}, status: :unauthorized
+        end
         # else:
+    rescue ActiveRecord::RecordNotFound => e
+        render json: {errors: e.record.errors}, status: :not_found
             # render errors with status: unauthorized
     end
 
     def destroy
         # use this for logging out
         # sessions.delete :uid
+        session.delete(:uid)
+        head :no_content
         # head :no_content
     end
 

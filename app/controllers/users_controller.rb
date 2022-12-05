@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
     
+    def index
+        render json: User.all, status: :ok
+    end
+
+    def show
+        #
+    end
+
     def create
         # use this for signing up
         # create the user using user_params
