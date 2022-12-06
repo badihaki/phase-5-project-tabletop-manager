@@ -27,6 +27,10 @@ const router = createBrowserRouter([
         path: "/nav",
         element: <NavigationBar />,
       },
+      {
+        path: "/user",
+        element: <UserPage />
+      }
     ],
   },
   // {
