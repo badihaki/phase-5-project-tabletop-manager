@@ -12,6 +12,7 @@ import ErrorPage from './components/NotFound';
 import UserPage from './components/User';
 import NavigationBar from './components/Navigation';
 import Home from './components/Home';
+import SignUpLogIn from './components/SignUpLogIn';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/user",
         element: <UserPage />
+      },
+      {
+        path: "/auth",
+        element: <SignUpLogIn />
       }
     ],
   },
