@@ -23,6 +23,19 @@ function SignUpLogIn(){
     function submitSignUpForm(submitEvent){
         submitEvent.preventDefault();
         console.log(signUpForm);
+        fetch('/signup', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signUpForm)
+        }).then(r => {
+            if(r.ok){
+                r.json().then(data=>{
+                    console.log(data);
+                })
+            }
+        })
     }
 
     function handleLogInForm(e){
