@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "./context components/UserContext";
 
 function SignUpLogIn(){
+
+    const { setUser } = useContext(UserContext)
+
     const [ signUpForm, setSignUpForm ] = useState({
         "name": "",
         "email": "",
         "password": "",
         "password_confirmation": ""
     })
+    const [ signUpMessages, setSignUpMessages ] = useState([""])
     const [ logInForm, setLogInForm ] = useState({
         "email": "",
         "password": ""
     })
+    const [ logInMessages, setLogInMessages ] = useState("")
     
-
+    // Sign Up
     function handleSignUpForm(e){
         const targetName = e.target.name;
         const targetValue = e.target.value;
@@ -22,7 +28,7 @@ function SignUpLogIn(){
     }
     function submitSignUpForm(submitEvent){
         submitEvent.preventDefault();
-        console.log(signUpForm);
+        // console.log(signUpForm);
         fetch('/signup', {
             method: "POST",
             headers: {
@@ -31,13 +37,28 @@ function SignUpLogIn(){
             body: JSON.stringify(signUpForm)
         }).then(r => {
             if(r.ok){
+                r.json().then( ()=>{
+                    setSignUpMessages(["Accepted. Please log in below"])
+                })
+            }
+            else{
                 r.json().then(data=>{
-                    console.log(data);
+                    const errorArray = ['UH-OH!! We ran into a problem!!'];
+                    for (const key in data.errors) {
+                        for (const message of data.errors[key]) {
+                            // console.log('raw message?? vvv')
+                            // console.log(message)
+                            errorArray.push(message)
+                        }
+                    }
+                    console.log(errorArray);
+                    setSignUpMessages(errorArray);
                 })
             }
         })
     }
 
+    // Log In
     function handleLogInForm(e){
         const targetName = e.target.name;
         const targetValue = e.target.value;
@@ -49,6 +70,15 @@ function SignUpLogIn(){
         submitEvent.preventDefault();
         console.log(logInForm);
     }
+
+    // Misc Elements
+    const signUpMessage = signUpMessages.map(message=>{
+        return(
+            <div id={message}>
+                {message}
+            </div>
+        )
+    })
 
     return(
         <div>
@@ -72,6 +102,7 @@ function SignUpLogIn(){
                 <input type={"password"} name={"password_confirmation"} onChange={handleSignUpForm} value={signUpForm.password_confirmation} />
                 <br />
                 <button type="submit" >Sign Up</button>
+                {signUpMessage}
             </form>
             <br />
             <p>-OR-</p>

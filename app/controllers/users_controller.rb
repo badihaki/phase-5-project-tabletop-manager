@@ -19,7 +19,7 @@ class UsersController < ApplicationController
         user = User.create!(permitted_params)
         render json: user, status: :created
     rescue ActiveRecord::RecordInvalid => record
-        render json: {errors: record.record.errors}
+        render json: {errors: record.record.errors}, status: :unprocessable_entity
     end
 
     private
