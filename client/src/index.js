@@ -13,6 +13,7 @@ import UserPage from './components/User';
 import NavigationBar from './components/Navigation';
 import Home from './components/Home';
 import SignUpLogIn from './components/SignUpLogIn';
+import { UserProvider } from './components/context components/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
 

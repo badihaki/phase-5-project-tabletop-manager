@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
         end
         # else:
     rescue ActiveRecord::RecordNotFound => e
-        render json: {errors: e.record.errors}, status: :not_found
+        render json: {error: "User not logged in"}, status: :not_found
             # render errors with status: unauthorized
     end
 
