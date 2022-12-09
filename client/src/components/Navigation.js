@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { UserContext } from "./context components/UserContext";
 
 function NavigationBar(){
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+
+    function handleLogoutButton(){
+        fetch('/logout', {
+            method: "DELETE"
+        }).then(setUser(null));
+    }
+
     return(
         <div className="sidebar">
             <ul>
@@ -17,7 +24,7 @@ function NavigationBar(){
                     <Link to={"/auth"}> SignUp </Link>
                 </li>
             </ul>
-            {user? <button>Logout</button> : ""}
+            {user? <button onClick={handleLogoutButton} >Logout</button> : ""}
         </div>
     )
 }

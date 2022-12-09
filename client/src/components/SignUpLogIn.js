@@ -77,8 +77,6 @@ function SignUpLogIn(){
         }).then(r=>{
             if(r.ok){
                 r.json().then(data=>{
-                    console.log(data);
-                    console.log("signed in");
                     setUser(data);
                 })
             }
