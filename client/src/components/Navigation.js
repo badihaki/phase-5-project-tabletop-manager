@@ -20,9 +20,6 @@ function NavigationBar(){
                 <li>
                     <Link to={"/user"}> User </Link>
                 </li>
-                <li>
-                    <Link to={"/auth"}> SignUp </Link>
-                </li>
             </ul>
             {user? <button onClick={handleLogoutButton} >Logout</button> : ""}
         </div>

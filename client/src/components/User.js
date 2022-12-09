@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "./context components/UserContext";
+import SignUpLogIn from "./SignUpLogIn";
+import UserInfo from "./UserInfo";
 
 function UserPage(){
+    const { user } = useContext(UserContext);
+
     return(
         <div>
-            <h1>User Page</h1>
-            <p>
-                Welcome to the user page
-            </p>
+            { user? <UserInfo /> : <SignUpLogIn /> }
         </div>
     )
 }
