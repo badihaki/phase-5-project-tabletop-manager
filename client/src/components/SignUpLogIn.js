@@ -68,7 +68,21 @@ function SignUpLogIn(){
     }
     function submitLogInForm(submitEvent){
         submitEvent.preventDefault();
-        console.log(logInForm);
+        fetch('/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(logInForm)
+        }).then(r=>{
+            if(r.ok){
+                r.json().then(data=>{
+                    console.log(data);
+                    console.log("signed in");
+                    setUser(data);
+                })
+            }
+        })
     }
 
     // Misc Elements

@@ -11,7 +11,7 @@ function App() {
   useEffect( ()=>{
     fetch('/me').then(r=>{
       if(r.ok){
-        r.json().then(data=>{console.log(data)})
+        r.json().then(data=>{setUser(data)})
       }
       else{
         r.json().then(data=>{console.log(data)})

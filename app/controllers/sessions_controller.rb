@@ -3,13 +3,14 @@ class SessionsController < ApplicationController
     def create
         # use this for logging in
         # find the user by the username
-        user = User.find_by(name: params[:name])
-        if user.valid?&.authenticate
+        user = User.find_by(email: params[:email])
+        # debugger
+        if user&.authenticate(params[:password])
             session[:uid] = user.id
             render json: user, status: :accepted
         end
     rescue ActiveRecord::RecordNotFound => err
-        render json: {errors: err.record.errors}
+        render json: {errors: err.record.errors}, status: :not_found
         # check if the user is valid and authenticate the password using params
         # if everything checks out:
             # store the user id in sessions[:uid] and render the user to the frontend
