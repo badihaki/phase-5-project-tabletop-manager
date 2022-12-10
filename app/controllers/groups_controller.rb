@@ -1,11 +1,11 @@
 class GroupsController < ApplicationController
 
     def index
+        debugger
         if(params[:user_id])
-            user = session.find_by(uid: params[:user_id])
-            debugger
-            render json: user, include: :groups, status: :ok
-            render: json
+            user = User.find(params[:user_id])
+            # debugger
+            render json: user.groups, status: :ok
         else
             render json: Group.all, status: :ok
         end
