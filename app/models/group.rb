@@ -5,4 +5,5 @@ class Group < ApplicationRecord
     has_many :players, through: :memberships, source: :player
 
     # Validations
+    validates :name, presence: true
 end
