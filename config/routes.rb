@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :memberships
   resources :groups
-  resources :users, except: [:create, :destroy]
+  resources :users, except: [:create, :destroy] do
+    resources :groups
+  end
 
   post '/signup', to: 'users#create'
   post '/login', to: 'sessions#create'
