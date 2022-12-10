@@ -1,10 +1,10 @@
 class GroupsController < ApplicationController
 
     def index
-        debugger
+        # debugger
         if(params[:user_id])
             user = User.find(params[:user_id])
-            # debugger
+            debugger
             render json: user.groups, status: :ok
         else
             render json: Group.all, status: :ok
@@ -14,7 +14,11 @@ class GroupsController < ApplicationController
     def create
         group = Group.new(permitted_params)
         group.game_master_id = params[:user_id]
-        debugger
+        group.save!
+        # debugger
+        render json: group, status: :created
+    rescue ActiveRecord::RecordInvalid => err
+        render json: {errors: err.record.errors}, status: :unprocessable_entity
     end
 
     private

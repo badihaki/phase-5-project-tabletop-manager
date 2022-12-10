@@ -6,4 +6,7 @@ class Group < ApplicationRecord
 
     # Validations
     validates :name, presence: true
+    validates :game_master_id, presence: true
+    validates :game, presence: true
+    validates :game_day, presence: true
 end

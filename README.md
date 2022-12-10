@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Start the Postgresql server: $ sudo service postgresql start
+Start rails server $ rails s
+Start npm server $ npm start --prefix client
