@@ -4,7 +4,7 @@ class User < ApplicationRecord
     # Associations
     has_many :memberships
     has_many :groups, through: :memberships
-    has_many :mastered_groups, foreign_key: "game_master_id", class_name: "Group"
+    has_many :mastered_groups, foreign_key: :game_master_id, class_name: "Group"
 
     # validations
     validates :name, presence: true, length: { in: 2..10 }

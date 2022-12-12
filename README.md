@@ -1,3 +1,10 @@
+Set Up
+In order to run the servers, fork and clone this repository, cd to directory, and run these commands in order:
+
+Start the Postgresql server: $ sudo service postgresql start
+Start rails server $ rails s
+Start npm server $ npm start --prefix client
+
 # README
 
 This README would normally document whatever steps are necessary to get the
