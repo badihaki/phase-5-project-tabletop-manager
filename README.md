@@ -5,6 +5,9 @@ Start the Postgresql server: $ sudo service postgresql start
 Start rails server $ rails s
 Start npm server $ npm start --prefix client
 
+dev email & pass
+lookout@xoingzd.space // abc123
+
 # README
 
 This README would normally document whatever steps are necessary to get the
