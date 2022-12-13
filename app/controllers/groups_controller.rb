@@ -4,10 +4,21 @@ class GroupsController < ApplicationController
         # debugger
         if(params[:user_id])
             user = User.find(params[:user_id])
-            debugger
+            # debugger
             render json: user.groups, status: :ok
         else
             render json: Group.all, status: :ok
+        end
+    end
+
+    def show
+        if(params[:user_id])
+            return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+            user = User.find(session[:uid])
+            render json: user.groups, status: :ok
+        else
+            group = Group.find(params[:id])
+            render json: group, status: :ok
         end
     end
 
