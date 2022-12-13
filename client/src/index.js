@@ -14,6 +14,8 @@ import NavigationBar from './components/Navigation';
 import Home from './components/Home';
 import SignUpLogIn from './components/SignUpLogIn';
 import { UserProvider } from './components/context components/UserContext';
+import Groups from './components/Groups';
+import { GroupsProvider } from './components/context components/GroupsContext';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/user",
         element: <UserPage />
+      },
+      {
+        path: "/groups",
+        element: <Groups />
       }
     ],
   },
@@ -45,7 +51,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <RouterProvider router={router} />
+      <GroupsProvider>
+        <RouterProvider router={router} />
+      </GroupsProvider>
     </UserProvider>
   </React.StrictMode>
 );

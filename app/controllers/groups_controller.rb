@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
     def index
         # debugger
         if(params[:user_id])
+            return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
             user = User.find(params[:user_id])
             # debugger
             render json: user.groups, status: :ok
@@ -23,6 +24,7 @@ class GroupsController < ApplicationController
     end
 
     def create
+        return render json: {error: "Not authorized to do this, please sign in"}, status: :unauthorized unless session.include?(:uid)
         group = Group.new(permitted_params)
         group.game_master_id = params[:user_id]
         group.save!

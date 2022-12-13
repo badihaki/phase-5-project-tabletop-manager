@@ -8,6 +8,7 @@ function UserPage(){
 
     return(
         <div>
+            {console.log(user)}
             { user? <UserInfo /> : <SignUpLogIn /> }
         </div>
     )

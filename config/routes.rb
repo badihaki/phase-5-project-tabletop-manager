@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :memberships
-  resources :groups
+  resources :groups, only: [:index, :show]
   resources :users, except: [:create, :destroy] do
     resources :groups
   end
