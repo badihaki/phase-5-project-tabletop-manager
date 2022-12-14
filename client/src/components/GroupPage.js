@@ -34,12 +34,19 @@ function GroupPage(){
                 We play {group.game} on {group.game_day}.
                 <br />
                 <br />
-                <h4>Members:</h4>
+                <h3>Members:</h3>
                 <ul>
                     {group.players.map(player=>{
+                        const membership = group.memberships.find(m=>{
+                            return m.player_id == player.id;
+                        })
                         return(
                             <li key={player.id}>
-                                {player.name}
+                                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
+                                <br />
+                                Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
+                                <br />
+                                <br />
                             </li>
                         )
                     })}
