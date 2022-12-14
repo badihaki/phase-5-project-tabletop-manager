@@ -27,7 +27,7 @@ function MembershipForm({ userId=0, groupId }){
                     const newGroup = [...groups];
                     newGroup.map(group=>{
                         if(group.id==groupId){
-                            group.players.push(data);
+                            group.players.push(data.player);
                         }
                     })
                     setGroups(newGroup);
