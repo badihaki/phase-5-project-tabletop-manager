@@ -1,9 +1,21 @@
 import React, { useContext, useState } from "react";
+import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
 
 function GroupForm(){
 
     const { user } = useContext(UserContext);
+    const { groups, setGroups } = useContext(GroupsContext);
+
+    const [ messages, setMessages ] = useState([""]);
+
+    const pageMessages = messages.map(message=>{
+        return(
+            <div key={message}>
+                {message}
+            </div>
+        )
+    })
 
     const [ form, setForm ] = useState({
         "game_master_id":user.id,
@@ -11,6 +23,15 @@ function GroupForm(){
         "game_day":"Sunday",
         "game":""
     });
+
+    function clearForm(){
+        setForm({
+        "game_master_id":user.id,
+        "name":"",
+        "game_day":"Sunday",
+        "game":""
+        })
+    }
 
     function handleFormChange(input){
         const key = input.target.name;
@@ -22,7 +43,34 @@ function GroupForm(){
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(form);
+        fetch(`/users/${user.id}/groups`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(form)
+        }).then(r=>{
+            if(r.ok){
+                r.json().then(data=>{
+                    const newGroup = [...groups, data];
+                    setGroups(newGroup);
+                    setMessages(["Group created"]);
+                })
+            }
+            else{
+                r.json().then(data=>{
+                    console.log(data);
+                    const errorArray = ['UH-OH!! We ran into a problem!!'];
+                    for (const key in data.errors) {
+                        for (const message of data.errors[key]) {
+                            errorArray.push(message)
+                        }
+                    }
+                    setMessages(errorArray);
+                })
+            }
+        })
+        clearForm();
     }
 
     function GameDaySelect(){
@@ -54,6 +102,8 @@ function GroupForm(){
             <GameDaySelect />
             <br />
             <button type="submit">Submit</button>
+            <br />
+            {pageMessages}
         </form>
     )
 }

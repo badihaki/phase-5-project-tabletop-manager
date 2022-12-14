@@ -10,8 +10,8 @@ function Groups(){
 
     const groupCards = groups.map( individualGroup=>{
         return(
-            <li>
-                <div>
+            <li key={individualGroup.id}>
+                <div >
                     {individualGroup.name}
                 </div>
             </li>
@@ -24,7 +24,7 @@ function Groups(){
             {user? <GroupForm /> : "" }
             <h2>Group List</h2>
             <ul>
-                {groupCards}
+                {groups? groupCards : ""}
             </ul>
         </div>
     )

@@ -86,7 +86,7 @@ function SignUpLogIn(){
     // Misc Elements
     const signUpMessage = signUpMessages.map(message=>{
         return(
-            <div id={message}>
+            <div key={message}>
                 {message}
             </div>
         )
