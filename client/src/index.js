@@ -16,6 +16,7 @@ import SignUpLogIn from './components/SignUpLogIn';
 import { UserProvider } from './components/context components/UserContext';
 import Groups from './components/Groups';
 import { GroupsProvider } from './components/context components/GroupsContext';
+import GroupPage from './components/GroupPage';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/groups",
         element: <Groups />
+      },
+      {
+        path: "/groups/:groupId",
+        element: <GroupPage />
       }
     ],
   },

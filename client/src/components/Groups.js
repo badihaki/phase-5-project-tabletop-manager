@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
 import GroupForm from "./NewGroupForm";
@@ -12,8 +13,12 @@ function Groups(){
         return(
             <li key={individualGroup.id}>
                 <div >
-                    {individualGroup.name}
+                    <h3>{individualGroup.name}</h3>
+                    Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
+                    <br />
+                    <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
                 </div>
+                <br />
             </li>
         )
     })
