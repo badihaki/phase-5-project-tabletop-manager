@@ -5,8 +5,10 @@ Start the Postgresql server: $ sudo service postgresql start
 Start rails server $ rails s
 Start npm server $ npm start --prefix client
 
-dev email & pass
+admin email & pass
 lookout@xoingzd.space // abc123
+dev emails:
+devX@xoingzd.space
 
 # README
 

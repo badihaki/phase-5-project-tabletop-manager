@@ -1,13 +1,29 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "./context components/GroupsContext";
-import JoinGroupForm from "./JoinGroupForm";
+import { UserContext } from "./context components/UserContext";
+import MembershipForm from "./MembershipForm";
 
 function GroupPage(){
     const { groupId } = useParams();
     const { groups } = useContext(GroupsContext);
+    const { user } = useContext(UserContext);
 
     const group = groups.find(group=>group.id == groupId);
+
+    function FormContainer(){
+        return(
+            <div>
+                <p>
+                    Want to join?
+                    <br />
+                    Enter your experience level and press Submit!
+                </p>
+                <br />
+                <MembershipForm groupId={groupId} userId={user.id} />
+            </div>
+        )
+    }
 
     return(
         <div>
@@ -21,6 +37,8 @@ function GroupPage(){
                 <h4>Members:</h4>
                 <ul>
                     {group.players.map(player=>{
+                        console.log(group)
+                        debugger;
                         return(
                             <li key={player.id}>
                                 {player.name}
@@ -30,13 +48,7 @@ function GroupPage(){
                 </ul>
                 <br />
                 <br />
-                <p>
-                    Want to join?
-                    <br />
-                    Enter your experience level and press Submit!
-                </p>
-                <br />
-                <JoinGroupForm />
+                {user? <FormContainer /> : "" }
             </p>
             <br />
             <Link to={"/groups"} style={{fontWeight: 'bold'}}>Back to Groups List</Link>

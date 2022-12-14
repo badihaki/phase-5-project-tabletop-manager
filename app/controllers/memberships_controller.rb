@@ -8,7 +8,7 @@ class MembershipsController < ApplicationController
         new_membership = Membership.create!(permitted_params)
         render json: new_membership, status: :created
     rescue ActiveRecord::RecordInvalid => err
-        render json: {errors: err.record.errors}
+        render json: {errors: err.record.errors}, status: :unprocessable_entity
     end
 
     private
