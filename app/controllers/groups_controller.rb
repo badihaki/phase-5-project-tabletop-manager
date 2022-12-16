@@ -34,6 +34,26 @@ class GroupsController < ApplicationController
         render json: {errors: err.record.errors}, status: :unprocessable_entity
     end
 
+    def update
+        return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+        group = Group.find(params[:id])
+        group.update!(permitted_params)
+        render json: group, status: :accepted
+    rescue ActiveRecord::RecordInvalid => err
+        render json: {errors: err.record.errors}, status: :unprocessable_entity
+    rescue ActiveRecord::RecordNotFound
+        render json: {error: "Data not found"}
+    end
+
+    def destroy
+        return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+        group = Group.find(params[:id])
+        group.destroy
+        render json:{}, status: :accepted
+    rescue ActiveRecord::RecordNotFound
+        render json: {error: "Data not found! Can't destroy a record that doesn't exist."}
+    end
+
     private
 
     def permitted_params

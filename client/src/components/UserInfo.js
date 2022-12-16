@@ -1,18 +1,74 @@
-import React, { useContext } from "react";
-import { useResolvedPath } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useResolvedPath } from "react-router-dom";
+import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
+import GroupUpdateForm from "./GroupUpdateForm";
 
 function UserInfo(){
-    const { user } = useContext(UserContext)
-    
+    const { user } = useContext(UserContext);
+    const { groups, setGroups } = useContext(GroupsContext);
+
+    function updateGroup(form){
+        fetch(`users/${user.id}/groups/${form.id}`,{
+            method: "PATCH",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(form)
+        }).then(r=>{
+            if(r.ok || r.accepted){
+                r.json().then(data=>{
+                    //change data here
+                    // user.mastered_groups.map(group=>{
+                    //     if(group.id == data.id){
+                    //         group = data;
+                    //     }
+                    // })
+                    const newGroupsList = [...groups];
+                    newGroupsList.map(group=>{
+                        if(group.id == data.id){
+                            group = data;
+                        }
+                    })
+                })
+            }
+        })
+    }
+
+    function deleteGroup(group){
+        console.log(group);
+        fetch(`users/${user.id}/groups/${group.id}`,{
+            method: "DELETE"
+        }).then(r=>{
+            if(r.accepted){
+                r.json().then(()=>{
+                    const newGroupsList = [...groups];
+                    newGroupsList.filter(listedGroup=>{
+                        return group.id != listedGroup.id
+                    });
+                    setGroups(newGroupsList);
+                })
+            }
+        })
+    }
+
     const masteredGroups = user.mastered_groups.map(group=>{
+        function handleDeleteButton(){deleteGroup(group)}
         return(
-            <li>{group.name}</li>
+            <li key={group.id}>
+                <span style={{fontWeight:'bold'}}>{group.name}</span> <button onClick={handleDeleteButton}>Delete Group</button>
+                <br />
+                <GroupUpdateForm updateFunction={updateGroup} group={group} />
+                <br />
+                <br />
+            </li>
         )
     })
     const userGroups = user.groups.map(group=>{
         return(
-            <li>{group.name}</li>
+            <li key={group.id}>
+                <span style={{fontWeight:'bold'}}>{group.name}</span>
+            </li>
         )
     })
 
