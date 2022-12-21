@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
   resources :memberships
-  resources :groups, only: [:index, :show]
-  resources :users, except: [:create, :destroy] do
-    resources :groups
-  end
-
+  resources :groups
   post '/signup', to: 'users#create'
   post '/login', to: 'sessions#create'
-  get '/me', to: 'sessions#show'
+  get '/me', to: 'users#show'
   delete '/logout', to: 'sessions#destroy'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

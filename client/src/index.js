@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <NavigationBar />,
       },
       {
-        path: "/user",
+        path: "/dashboard",
         element: <UserPage />
       },
       {
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <Groups />
       },
       {
-        path: "/groups/:groupId",
+        path: "/groups/:id",
         element: <GroupPage />
       }
     ],

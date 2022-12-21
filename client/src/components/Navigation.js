@@ -18,7 +18,7 @@ function NavigationBar(){
                     <Link to={"/home"}> Home </Link>
                 </li>
                 <li>
-                    <Link to={"/user"}> User </Link>
+                    <Link to={"/dashboard"}> User </Link>
                 </li>
                 <li>
                     <Link to={"/groups"}> Groups </Link>
