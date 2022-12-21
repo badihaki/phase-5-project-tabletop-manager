@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   resources :memberships
   resources :groups
   post '/signup', to: 'users#create'
