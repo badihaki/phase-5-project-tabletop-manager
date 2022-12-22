@@ -9,6 +9,11 @@ export default class GroupMessages extends React.Component{
             {
                 channel: 'GroupChatChannel',
                 username: this.user.name
+            },
+            {
+                connected: ()=>console.log('connected'),
+                disconnected: ()=>console.log('disconnected'),
+                received: data=>console.log(data),
             }
         )
     };
