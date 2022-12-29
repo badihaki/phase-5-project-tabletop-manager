@@ -3,6 +3,7 @@ import { Link, useResolvedPath } from "react-router-dom";
 import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
 import GroupUpdateForm from "./GroupUpdateForm";
+import MessageBoard from "./MessageBoard";
 
 function UserInfo(){
     const { user } = useContext(UserContext);
@@ -59,6 +60,10 @@ function UserInfo(){
                 <span style={{fontWeight:'bold'}}>{group.name}</span> <button onClick={handleDeleteButton}>Delete Group</button>
                 <br />
                 <GroupUpdateForm updateFunction={updateGroup} group={group} />
+                <br />
+                Check the board!
+                <br />
+                <MessageBoard group={group} />
                 <br />
                 <br />
             </li>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :group_messages
   mount ActionCable.server => '/cable'
   resources :memberships
   resources :groups

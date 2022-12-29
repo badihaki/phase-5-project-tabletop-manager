@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import consumer from "../cable";
 import { UserContext } from "./context components/UserContext";
 
+
 export default class GroupMessages extends React.Component{
-    user = useContext(UserContext);
     componentDidMount(){
+        console.log(this.props.user)
         consumer.subscriptions.create(
             {
                 channel: 'GroupChatChannel',
-                username: this.user.name
+                // username: this.user.name
+                username: this.props.user.name
             },
             {
                 connected: ()=>console.log('connected'),
@@ -20,4 +22,12 @@ export default class GroupMessages extends React.Component{
     componentWillUnmount(){
         consumer.disconnect()
     };
+    render(){
+        // const [state, setState] = useState
+        return(
+            <div>
+                Messages
+            </div>
+        )
+    }
 }
