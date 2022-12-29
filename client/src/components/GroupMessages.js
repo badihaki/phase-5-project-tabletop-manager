@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import consumer from "../cable";
-import { UserContext } from "./context components/UserContext";
 
 
 export default class GroupMessages extends React.Component{
-    componentDidMount(){
+    componentDidMount(){ 
         console.log(this.props.user)
         consumer.subscriptions.create(
             {
@@ -23,7 +22,6 @@ export default class GroupMessages extends React.Component{
         consumer.disconnect()
     };
     render(){
-        // const [state, setState] = useState
         return(
             <div>
                 Messages

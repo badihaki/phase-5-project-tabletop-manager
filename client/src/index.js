@@ -17,6 +17,7 @@ import { UserProvider } from './components/context components/UserContext';
 import Groups from './components/Groups';
 import { GroupsProvider } from './components/context components/GroupsContext';
 import GroupPage from './components/GroupPage';
+import MessageBoard from './components/MessageBoard';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/groups/:id",
         element: <GroupPage />
+      },
+      {
+        path: "/groups/:id/messages",
+        element: <MessageBoard />
       }
     ],
   },

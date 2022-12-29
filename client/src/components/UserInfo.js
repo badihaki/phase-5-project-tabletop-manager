@@ -61,9 +61,7 @@ function UserInfo(){
                 <br />
                 <GroupUpdateForm updateFunction={updateGroup} group={group} />
                 <br />
-                Check the board!
-                <br />
-                <MessageBoard group={group} />
+                <Link to={`/groups/${group.id}/messages`}>Check the Board!</Link>
                 <br />
                 <br />
             </li>
@@ -73,6 +71,8 @@ function UserInfo(){
         return(
             <li key={group.id}>
                 <span style={{fontWeight:'bold'}}>{group.name}</span>
+                <br />
+                <Link to={`/groups/${group.id}/messages`}>Check the Board!</Link>
             </li>
         )
     })

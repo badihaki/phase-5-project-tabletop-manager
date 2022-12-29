@@ -26,6 +26,7 @@ function Groups(){
     return(
         <div>
             <h1>Groups</h1>
+            {user? <div>Create a new group below</div> : "" }
             {user? <GroupForm /> : "" }
             <h2>Group List</h2>
             <ul>

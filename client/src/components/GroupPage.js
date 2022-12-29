@@ -5,11 +5,11 @@ import { UserContext } from "./context components/UserContext";
 import MembershipForm from "./MembershipForm";
 
 function GroupPage(){
-    const { groupId } = useParams();
+    const { id } = useParams();
     const { groups } = useContext(GroupsContext);
     const { user } = useContext(UserContext);
 
-    const group = groups.find(group=>group.id == groupId);
+    const group = groups.find(group=>group.id == id);
 
     function FormContainer(){
         return(
@@ -20,7 +20,7 @@ function GroupPage(){
                     Enter your experience level and press Submit!
                 </p>
                 <br />
-                <MembershipForm groupId={groupId} userId={user.id} />
+                <MembershipForm groupId={id} userId={user.id} />
             </div>
         )
     }
