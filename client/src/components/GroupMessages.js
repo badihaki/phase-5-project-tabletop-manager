@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import consumer from "../cable";
 
 
 export default class GroupMessages extends React.Component{
-    componentDidMount(){ 
-        console.log(this.props.user)
+    componentDidMount(){
         consumer.subscriptions.create(
             {
                 channel: 'GroupChatChannel',

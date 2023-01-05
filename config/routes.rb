@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :group_messages
+  resources :group_messages, exclude: [:delete]
   mount ActionCable.server => '/cable'
   resources :memberships
   resources :groups

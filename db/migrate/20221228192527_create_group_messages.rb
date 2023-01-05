@@ -3,8 +3,8 @@ class CreateGroupMessages < ActiveRecord::Migration[7.0]
     create_table :group_messages do |t|
       t.integer :user_id
       t.integer :group_id
-      t.integer :comment_id
       t.text :content
+      t.references :comment, foreign_key: {to_table: :group_messages}
 
       t.timestamps
     end

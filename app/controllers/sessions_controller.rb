@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     # we'll use the session controller to control loggin in/out
+
     def create
         # use this for logging in
         # find the user by the username

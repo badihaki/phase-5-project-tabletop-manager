@@ -17,10 +17,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_192527) do
   create_table "group_messages", force: :cascade do |t|
     t.integer "user_id"
     t.integer "group_id"
-    t.integer "comment_id"
     t.text "content"
+    t.bigint "comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_group_messages_on_comment_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -48,4 +49,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_192527) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "group_messages", "group_messages", column: "comment_id"
 end
