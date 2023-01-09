@@ -36,7 +36,9 @@ function MessageBoard(){
                     "Content-Type":"application/json"
                 },
                 body: JSON.stringify(form)
-            }).then(r=>r.json()).then(data => console.log(data))
+            }).then(r=>r.json()).then(data =>{
+                // console.log(data);
+                })
         }
         
         return(

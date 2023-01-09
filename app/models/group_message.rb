@@ -12,8 +12,8 @@ class GroupMessage < ApplicationRecord
     def broadcast_message
         debugger
         ActionCable.server.broadcast('public_chat',{
-            id:,
-            body:
+            id: self.id,
+            body: self.content
         })
     end
 end

@@ -18,6 +18,7 @@ import Groups from './components/Groups';
 import { GroupsProvider } from './components/context components/GroupsContext';
 import GroupPage from './components/GroupPage';
 import MessageBoard from './components/MessageBoard';
+import { MessagesProvider } from './components/context components/MessagesContext';
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,9 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <GroupsProvider>
-        <RouterProvider router={router} />
+        <MessagesProvider>
+          <RouterProvider router={router} />
+        </MessagesProvider>
       </GroupsProvider>
     </UserProvider>
   </React.StrictMode>
