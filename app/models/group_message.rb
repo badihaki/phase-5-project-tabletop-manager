@@ -10,7 +10,7 @@ class GroupMessage < ApplicationRecord
     private
 
     def broadcast_message
-        debugger
+        # debugger
         ActionCable.server.broadcast('public_chat',{
             id: self.id,
             body: self.content

@@ -3,6 +3,7 @@ import consumer from "../cable";
 
 
 export default class GroupMessages extends React.Component{
+    
     componentDidMount(){
         consumer.subscriptions.create(
             {
@@ -13,7 +14,12 @@ export default class GroupMessages extends React.Component{
             {
                 connected: ()=>console.log('connected'),
                 disconnected: ()=>console.log('disconnected'),
-                received: data=>console.log(data),
+                received: data=>{
+                    if(data.id != null){
+                        // console.log(data);
+                        this.props.setMessages(data);
+                    }
+                },
             }
         )
     };
@@ -22,9 +28,9 @@ export default class GroupMessages extends React.Component{
     };
     render(){
         return(
-            <div>
-                Messages
-            </div>
+            <h2>
+                {this.props.group.name}'s Message Board
+            </h2>
         )
     }
 }

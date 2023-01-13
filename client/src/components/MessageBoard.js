@@ -1,12 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "./context components/GroupsContext";
+import { MessagesContext } from "./context components/MessagesContext";
 import { UserContext } from "./context components/UserContext";
 import GroupMessages from "./GroupMessages";
 
 function MessageBoard(){
     const {user} = useContext(UserContext);
-    const {groups} = useContext(GroupsContext)
+    const {groups} = useContext(GroupsContext);
+    const {messages, setMessages} = useContext(MessagesContext);
     const {id} = useParams();
 
     const group = groups.find(group => group.id==id)
@@ -18,7 +20,32 @@ function MessageBoard(){
         "comment_id":""
     })
 
-    if(user!=null && group != null){
+    function addNewMessage(message){
+        const updatedMessageList = [...messages];
+        updatedMessageList.push(message);
+        // debugger;
+        setMessages(updatedMessageList);
+    }
+
+    const groupMessages = ()=>{
+        if(messages.length <= 0){
+            return (<li key={"noId"}>No mesaages</li>)
+        }
+        else{
+            return messages.filter(message=>{
+                return message.group_id == id;
+            }).map(message=>{
+                // debugger;
+                return(
+                    <li key={message.id}>
+                        {message.content}
+                    </li>
+                )
+            })
+        }
+    }
+
+    if(user != null && group != null){
 
         function handleFormChange(event){
             const newForm = {...form};
@@ -40,25 +67,24 @@ function MessageBoard(){
                 // console.log(data);
                 })
         }
-        
         return(
             <div>
-                <h3>
-                    {group.name}'s Message Board
-                    <GroupMessages group={group} user={user} />
+                <GroupMessages group={group} user={user} messages={messages} setMessages={addNewMessage} />
+                <br />
+                <br />
+                <ul>
+                    {groupMessages()}
+                </ul>
+                <form onSubmit={handleSubmit}>
+                    <h4>New Message:</h4>
+                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} onChange={handleFormChange} />
                     <br />
                     <br />
-                    <form onSubmit={handleSubmit}>
-                        <h4>New Message:</h4>
-                        <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} onChange={handleFormChange} />
-                        <br />
-                        <br />
-                        <button type="submit">Submit</button>
-                    </form>
-                    <br />
-                    <br />
-                    <Link to={"/dashboard"}> Back </Link>
-                </h3>
+                    <button type="submit">Submit</button>
+                </form>
+                <br />
+                <br />
+                <Link to={"/dashboard"}> Back </Link>
             </div>
         )
     }
