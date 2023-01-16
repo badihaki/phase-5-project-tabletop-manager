@@ -19,6 +19,7 @@ import { GroupsProvider } from './components/context components/GroupsContext';
 import GroupPage from './components/GroupPage';
 import MessageBoard from './components/MessageBoard';
 import { MessagesProvider } from './components/context components/MessagesContext';
+import { CharactersProvider } from './components/context components/CharactersContext';
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,9 @@ root.render(
     <UserProvider>
       <GroupsProvider>
         <MessagesProvider>
-          <RouterProvider router={router} />
+          <CharactersProvider>
+            <RouterProvider router={router} />
+          </CharactersProvider>
         </MessagesProvider>
       </GroupsProvider>
     </UserProvider>

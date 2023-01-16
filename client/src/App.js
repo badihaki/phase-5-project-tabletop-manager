@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { json, Outlet } from 'react-router-dom';
 import './App.css';
+import { CharactersContext } from './components/context components/CharactersContext';
 import { GroupsContext } from './components/context components/GroupsContext';
 import { MessagesContext } from './components/context components/MessagesContext';
 import { UserContext } from './components/context components/UserContext';
@@ -11,6 +12,7 @@ function App() {
   const { user, setUser } = useContext( UserContext );
   const { groups, setGroups } = useContext( GroupsContext );
   const { messages, setMessages } = useContext( MessagesContext );
+  const { characters, setCharacters } = useContext( CharactersContext );
 
   useEffect( ()=>{
     fetch('/me').then(r=>{
@@ -46,6 +48,22 @@ function App() {
       })
     }
   }, [user])
+
+  useEffect( ()=>{
+    if(user!=null){
+      fetch('/characters').then(r=>{
+        if(r.ok){
+          r.json().then(data=>{
+            console.log(data);
+            setCharacters(data);
+          })
+        }
+        else{
+          r.json().then(data=>console.log(data))
+        }
+      })
+    }
+  }, [user] )
 
   return (
     <div className="App">
