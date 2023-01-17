@@ -20,6 +20,7 @@ import GroupPage from './components/GroupPage';
 import MessageBoard from './components/MessageBoard';
 import { MessagesProvider } from './components/context components/MessagesContext';
 import { CharactersProvider } from './components/context components/CharactersContext';
+import Characters from './components/Characters';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/groups/:id/messages",
         element: <MessageBoard />
+      },
+      {
+        path: "/characters",
+        element: <Characters />
       }
     ],
   },

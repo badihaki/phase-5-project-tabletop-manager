@@ -23,6 +23,7 @@ function NavigationBar(){
                 <li>
                     <Link to={"/groups"}> Groups </Link>
                 </li>
+                {user? <li><Link to={"/characters"}> Characters </Link></li> : ""}
             </ul>
             {user? <button onClick={handleLogoutButton} >Logout</button> : ""}
         </div>
