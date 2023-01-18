@@ -54,7 +54,6 @@ function App() {
       fetch('/characters').then(r=>{
         if(r.ok){
           r.json().then(data=>{
-            console.log(data);
             setCharacters(data);
           })
         }

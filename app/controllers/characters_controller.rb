@@ -16,6 +16,15 @@ class CharactersController < ApplicationController
         render json: {errors: obj.record.errors}, status: :unprocessable_entity
     end
 
+    def update
+        return render json: {error: "Please sign in"}, status: :unauthorized unless session.include?(:uid)
+        character = Character.find(params[:id])
+        character.update!(update_params)
+        render json: character, status: :ok
+    rescue ActiveRecord::RecordInvalid => obj
+        render json: {errors: obj.record.errors}, status: :unprocessable_entity
+    end
+
     def destroy
         return render json: {error: "Please sign in"}, status: :unauthorized unless session.include?(:uid)
         toon = Character.find(params[:id])
