@@ -7,16 +7,26 @@ class CharactersController < ApplicationController
 
     def create
         return render json: {error: "Please sign in"}, status: :unauthorized unless session.include?(:uid)
-        new_character = Character.create!(create_params)
+        new_character = Character.new(create_params)
+        new_character.user_id = session[:uid]
+        new_character.level = 0;
+        new_character.save!
         render json: new_character, status: :created
     rescue ActiveRecord::RecordInvalid => obj
         render json: {errors: obj.record.errors}, status: :unprocessable_entity
     end
 
+    def destroy
+        return render json: {error: "Please sign in"}, status: :unauthorized unless session.include?(:uid)
+        toon = Character.find(params[:id])
+        toon.destroy!
+        head :no_content
+    end
+
     private
 
     def create_params
-        params.permit(:user_id, :name)
+        params.permit(:user_id, :name, :history, :stats)
     end
 
     def update_params

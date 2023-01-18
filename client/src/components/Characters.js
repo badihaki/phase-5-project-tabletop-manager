@@ -4,27 +4,66 @@ import { UserContext } from "./context components/UserContext";
 
 function Characters(){
     const { user } = useContext(UserContext);
-    const { characters } = useContext(CharactersContext)
+    const { characters, setCharacters } = useContext(CharactersContext)
 
     const [ newCharacterForm, setNewCharacterForm ] = useState({
         "name":"",
         "history":"",
         "stats":""
     })
-
+    
     const characterList = characters.map(toon=>{
-        console.log(toon);
+        // console.log(toon);
+        return(
+            <li key={toon.id}>
+                {toon.name} : <button name={toon.id} onClick={handleDeleteButton}>Delete</button>
+                <ul>
+                    <li>Level: {toon.level}</li>
+                    <li>{toon.stats}</li>
+                    <li>{toon.history}</li>
+                </ul>
+            </li>
+        )
     })
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(newCharacterForm)
+        fetch("/characters",{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(newCharacterForm)
+        }).then(
+            r=>{
+                if(r.ok || r.created){
+                    r.json().then(data=>{
+                        console.log(data);
+                        setCharacters([...characters, data]);
+                    })
+                }
+            }
+        )
         setNewCharacterForm({
             "name":"",
             "history":"",
-            "stats":""
+            "stats":"",
+            "level":1
         })
     }
+    
+    function handleDeleteButton(e){
+        const toonID = e.target.name;
+        fetch(`characters/${toonID}`,{
+            method: "DELETE",
+        }).then(()=>{
+            const newToonList = characters.filter(toon=>{
+                return toon.id != toonID
+            })
+            setCharacters(newToonList);
+        })
+    }
+
     function handleNewCharacterFormChange(e){
         const key = e.target.name;
         const value = e.target.value;
