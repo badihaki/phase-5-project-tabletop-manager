@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CharactersContext } from "./context components/CharactersContext";
 import { UserContext } from "./context components/UserContext";
 import SignUpLogIn from "./SignUpLogIn";
@@ -14,42 +14,36 @@ function Characters(){
     })
     
     function UpdateForm( {toon} ){
-        const [ form, setForm ] = useState({
+        const [ updateForm, setUpdateForm ] = useState({
             "level": toon.level,
             "history":toon.history,
             "stats":toon.stats
         })
 
-        function handleFormChange(e){
+        function handleUpdateFormChange(e){
             const key = e.target.name;
             const value = e.target.value;
-            const newForm = {...form};
+            const newForm = {...updateForm};
             newForm[key] = value;
-            setForm(newForm);
+            setUpdateForm(newForm);
         }
-        function handleFormSubmit(e){
+        function handleUpdateFormSubmit(e){
             e.preventDefault();
             fetch(`/characters/${toon.id}`,{
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(form)
+                body: JSON.stringify(updateForm)
             }).then(r=>{
                 if(r.ok){
                     r.json().then(data=>{
-                        const newCharacterList = [...characters];
-                        newCharacterList.forEach(char=>{
-                            if(char.id == data.id){
-                                return char = data;
+                        const newCharacterList = characters.map(character=>{
+                            if(character.id == data.id){
+                                return character = data;
                             }
+                            else return character;
                         })
-                        // newCharacterList.map(char=>{
-                        //     if(char.id == data.id){
-                        //         return char = data;
-                        //     }
-                        // })
-                        console.log(newCharacterList);
                         setCharacters(newCharacterList);
                     })
                 }
@@ -61,12 +55,12 @@ function Characters(){
             })
         }
         return(
-            <form onSubmit={handleFormSubmit}>
-                Level: <input type={"number"} name={"level"} value={form.level} onChange={handleFormChange} />
+            <form onSubmit={handleUpdateFormSubmit}>
+                Level: <input type={"number"} name={"level"} value={updateForm.level} onChange={handleUpdateFormChange} />
                 <br />
-                Stats: <input type={"text"} name={"stats"} value={form.stats} onChange={handleFormChange} />
+                Stats: <input type={"text"} name={"stats"} value={updateForm.stats} onChange={handleUpdateFormChange} />
                 <br />
-                History: <input type={"text"} name={"history"} value={form.history} onChange={handleFormChange} />
+                History: <input type={"text"} name={"history"} value={updateForm.history} onChange={handleUpdateFormChange} />
                 <br />
                 <button type="submit">Update</button>
             </form>
@@ -93,7 +87,14 @@ function Characters(){
     }
 
     const characterList = characters.map(toon=>{
-        return <CharacterSheet key={toon.id} toon={toon} />
+        if(toon != null){
+            return <CharacterSheet key={toon.id} toon={toon} />
+        }
+        else{
+            console.error("WARNING no characters detected.")
+            console.log("Printing out character list...");
+            console.log(characters);
+        }
     })
 
     function handleSubmit(e){
