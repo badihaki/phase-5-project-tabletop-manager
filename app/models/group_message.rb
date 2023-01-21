@@ -13,7 +13,8 @@ class GroupMessage < ApplicationRecord
         # debugger
         ActionCable.server.broadcast('public_chat',{
             id: self.id,
-            body: self.content
+            body: self.content,
+            group_id: self.group_id
         })
     end
 end

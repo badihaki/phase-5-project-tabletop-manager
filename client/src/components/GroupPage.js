@@ -34,27 +34,27 @@ function GroupPage(){
                 We play {group.game} on {group.game_day}.
                 <br />
                 <br />
-                <h3>Members:</h3>
-                <ul>
-                    {group.players.map(player=>{
-                        const membership = group.memberships.find(m=>{
-                            return m.player_id == player.id;
-                        })
-                        return(
-                            <li key={player.id}>
-                                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
-                                <br />
-                                Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
-                                <br />
-                                <br />
-                            </li>
-                        )
-                    })}
-                </ul>
-                <br />
-                <br />
-                {user? <FormContainer /> : "" }
             </p>
+                <h3>Members:</h3>
+            <ul>
+                {group.players.map(player=>{
+                    const membership = group.memberships.find(m=>{
+                        return m.player_id == player.id;
+                    })
+                    return(
+                        <li key={player.id}>
+                            Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
+                            <br />
+                            Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
+                            <br />
+                            <br />
+                        </li>
+                    )
+                })}
+            </ul>
+            <br />
+            <br />
+            {user? <FormContainer /> : "" }
             <br />
             <Link to={"/groups"} style={{fontWeight: 'bold'}}>Back to Groups List</Link>
         </div>
