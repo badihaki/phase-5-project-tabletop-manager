@@ -13,7 +13,7 @@ function MessageBoard(){
 
     const group = groups.find(group => group.id==id)
     
-    const [ form, setForm ] = useState({
+    const [ messageForm, setMessageForm ] = useState({
         "content":"",
         "user_id": user.id,
         "group_id": id,
@@ -22,9 +22,21 @@ function MessageBoard(){
 
     function addNewMessage(message){
         const updatedMessageList = [...messages];
-        updatedMessageList.push(message);
+        let listNeedsToUpdate = true;
+        for (let index = 0; index < updatedMessageList.length; index++) {
+            const element = updatedMessageList[index];
+            if(element.id == message.id) 
+            {
+                listNeedsToUpdate = false;
+                debugger;
+                break;
+            }
+        }
+        if(listNeedsToUpdate == true){
+            updatedMessageList.push(message);
+            setMessages(updatedMessageList);
+        }
         // debugger;
-        setMessages(updatedMessageList);
     }
 
     const groupMessages = ()=>{
@@ -38,6 +50,7 @@ function MessageBoard(){
                 // debugger;
                 return(
                     <li key={message.id}>
+                        {console.log(message)}
                         {message.content}
                     </li>
                 )
@@ -48,11 +61,11 @@ function MessageBoard(){
     if(user != null && group != null){
 
         function handleFormChange(event){
-            const newForm = {...form};
+            const newForm = {...messageForm};
             const key = event.target.name;
             const value = event.target.value;
             newForm[key] = value;
-            setForm(newForm);
+            setMessageForm(newForm);
         }
 
         function handleSubmit(event){
@@ -62,9 +75,15 @@ function MessageBoard(){
                 headers: {
                     "Content-Type":"application/json"
                 },
-                body: JSON.stringify(form)
+                body: JSON.stringify(messageForm)
             }).then(r=>r.json()).then(data =>{
                 // console.log(data);
+                setMessageForm({
+                    "content":"",
+                    "user_id": user.id,
+                    "group_id": id,
+                    "comment_id":""
+                })
                 })
         }
         return(
@@ -77,7 +96,8 @@ function MessageBoard(){
                 </ul>
                 <form onSubmit={handleSubmit}>
                     <h4>New Message:</h4>
-                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} onChange={handleFormChange} />
+                    <div>Posting as <span style={{ fontWeight:"bold" }}>{user.name}</span></div>
+                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={messageForm.content} onChange={handleFormChange} />
                     <br />
                     <br />
                     <button type="submit">Submit</button>

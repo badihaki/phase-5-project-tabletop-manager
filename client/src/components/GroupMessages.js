@@ -16,7 +16,7 @@ export default class GroupMessages extends React.Component{
                 disconnected: ()=>console.log('disconnected'),
                 received: data=>{
                     if(data.id != null){
-                        console.log(data);
+                        // console.log(data);
                         this.props.setMessages(data);
                     }
                 },
