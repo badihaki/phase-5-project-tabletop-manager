@@ -4,6 +4,7 @@ import { GroupsContext } from "./context components/GroupsContext";
 import { MessagesContext } from "./context components/MessagesContext";
 import { UserContext } from "./context components/UserContext";
 import GroupMessages from "./GroupMessages";
+import Message from "./Message";
 
 function MessageBoard(){
     const {user} = useContext(UserContext);
@@ -48,11 +49,15 @@ function MessageBoard(){
                 return message.group_id == id;
             }).map(message=>{
                 // debugger;
+                /*
+                Put in new message component here!! vVv
+                */
                 return(
-                    <li key={message.id}>
-                        {console.log(message)}
-                        {message.content}
-                    </li>
+                    // <li key={message.id}>
+                    //     {console.log(message)}
+                    //     {message.content}
+                    // </li>
+                    <Message message={message} />
                 )
             })
         }
