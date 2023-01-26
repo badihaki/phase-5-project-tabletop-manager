@@ -29,7 +29,7 @@ function SignUpLogIn(){
     function submitSignUpForm(submitEvent){
         submitEvent.preventDefault();
         // console.log(signUpForm);
-        fetch('/signup', {
+        fetch('/api/signup', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -68,7 +68,7 @@ function SignUpLogIn(){
     }
     function submitLogInForm(submitEvent){
         submitEvent.preventDefault();
-        fetch('/login', {
+        fetch('/api/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

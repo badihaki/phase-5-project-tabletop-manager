@@ -9,29 +9,59 @@ function Groups(){
     const { groups } = useContext(GroupsContext)
     const { user } = useContext(UserContext)
 
-    const groupCards = groups.map( individualGroup=>{
+    // const groupCards = groups.map( individualGroup=>{
+    //     return(
+    //         <li key={individualGroup.id}>
+    //             <div >
+    //                 <h3>{individualGroup.name}</h3>
+    //                 Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
+    //                 <br />
+    //                 <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
+    //             </div>
+    //             <br />
+    //         </li>
+    //     )
+    // })
+
+    function GroupCards(){
+        if (groups.length <= 0){
+            return (
+            <div>No groups made yet. </div>
+            )
+        }
+        else{
+            return groups.map( individualGroup=>{
+                    return(
+                        <li key={individualGroup.id}>
+                            <div >
+                                <h3>{individualGroup.name}</h3>
+                                Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
+                                <br />
+                                <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
+                            </div>
+                            <br />
+                        </li>
+                    )
+        } )
+    }}
+
+    function GroupComponent(){
         return(
-            <li key={individualGroup.id}>
-                <div >
-                    <h3>{individualGroup.name}</h3>
-                    Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
-                    <br />
-                    <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
-                </div>
-                <br />
-            </li>
+            <div>
+                <h1>Groups</h1>
+                {user? <div>Create a new group below</div> : "" }
+                {user? <GroupForm /> : "" }
+                <h2>Group List</h2>
+                <ul>
+                    {groups? GroupCards() : ""}
+                </ul>
+            </div>
         )
-    })
+    }
 
     return(
         <div>
-            <h1>Groups</h1>
-            {user? <div>Create a new group below</div> : "" }
-            {user? <GroupForm /> : "" }
-            <h2>Group List</h2>
-            <ul>
-                {groups? groupCards : ""}
-            </ul>
+            <GroupComponent />
         </div>
     )
 }
