@@ -15,7 +15,7 @@ function App() {
   const { characters, setCharacters } = useContext( CharactersContext );
 
   useEffect( ()=>{
-    fetch('/api/me').then(r=>{
+    fetch('/me').then(r=>{
       if(r.ok){
         r.json().then(data=>{setUser(data)})
       }
@@ -26,7 +26,7 @@ function App() {
   }, [])
 
   useEffect(()=>{
-    fetch('/api/groups').then(r=>{
+    fetch('/groups').then(r=>{
       if(r.ok){
         r.json().then(data=>{setGroups(data)})
       }
@@ -38,7 +38,7 @@ function App() {
 
   useEffect(()=>{
     if(user!=null){
-      fetch('/api/group_messages').then(r=>{
+      fetch('/group_messages').then(r=>{
         if(r.ok){
           r.json().then(data=>{setMessages(data)})
         }
@@ -51,7 +51,7 @@ function App() {
 
   useEffect( ()=>{
     if(user!=null){
-      fetch('/api/characters').then(r=>{
+      fetch('/characters').then(r=>{
         if(r.ok){
           r.json().then(data=>{
             setCharacters(data);
