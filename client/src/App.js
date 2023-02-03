@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { json, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import './App.css';
 import { CharactersContext } from './components/context components/CharactersContext';
 import { GroupsContext } from './components/context components/GroupsContext';
