@@ -1,4 +1,4 @@
-class GroupMessagesController < ApplicationController
+class Api::GroupMessagesController < ApplicationController
     
     def index
         return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)

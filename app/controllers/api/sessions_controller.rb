@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
     # we'll use the session controller to control loggin in/out
 
     def create

@@ -1,4 +1,4 @@
-class CharactersController < ApplicationController
+class Api::CharactersController < ApplicationController
     def index
         return render json: {error: "Please sign in"}, status: :unauthorized unless session.include?(:uid)
         chararacters = User.find(session[:uid]).characters

@@ -1,4 +1,4 @@
-class MembershipsController < ApplicationController
+class Api::MembershipsController < ApplicationController
 
     def index
         render json: Membership.all, status: :ok
