@@ -29,7 +29,7 @@ function SignUpLogIn(){
     function submitSignUpForm(submitEvent){
         submitEvent.preventDefault();
         // console.log(signUpForm);
-        fetch('/signup', {
+        fetch('/api/signup', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -38,7 +38,8 @@ function SignUpLogIn(){
         }).then(r => {
             if(r.ok){
                 r.json().then( ()=>{
-                    setSignUpMessages(["Accepted. Please log in below"])
+                    setSignUpMessages(["Accepted. Please log in below"]);
+                    clearSignUpForm();
                 })
             }
             else{
@@ -49,12 +50,22 @@ function SignUpLogIn(){
                             // console.log('raw message?? vvv')
                             // console.log(message)
                             errorArray.push(message)
+                            clearSignUpForm();
                         }
                     }
                     console.log(errorArray);
                     setSignUpMessages(errorArray);
                 })
             }
+        })
+    }
+
+    function clearSignUpForm(){
+        setSignUpForm({
+            "name": "",
+            "email": "",
+            "password": "",
+            "password_confirmation": ""
         })
     }
 
@@ -68,7 +79,7 @@ function SignUpLogIn(){
     }
     function submitLogInForm(submitEvent){
         submitEvent.preventDefault();
-        fetch('/login', {
+        fetch('/api/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

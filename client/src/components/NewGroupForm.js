@@ -43,7 +43,7 @@ function GroupForm(){
 
     function handleSubmit(e){
         e.preventDefault();
-        fetch(`/users/${user.id}/groups`,{
+        fetch(`/api/groups`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

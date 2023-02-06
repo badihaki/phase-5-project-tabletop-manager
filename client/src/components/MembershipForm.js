@@ -15,7 +15,7 @@ function MembershipForm({ userId=0, groupId }){
     function handleSubmit(e){
         e.preventDefault();
         // console.log(form);
-        fetch('/memberships',{
+        fetch('/api/memberships',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,6 +24,7 @@ function MembershipForm({ userId=0, groupId }){
         }).then(r=>{
             if(r.ok){
                 r.json().then(data=>{
+                    debugger
                     const newGroup = [...groups];
                     newGroup.map(group=>{
                         if(group.id==groupId){

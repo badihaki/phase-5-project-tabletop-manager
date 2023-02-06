@@ -25,9 +25,7 @@ class Api::GroupsController < ApplicationController
 
     def create
         return render json: {error: "Not authorized to do this, please sign in"}, status: :unauthorized unless session.include?(:uid)
-        group = Group.new(permitted_params)
-        group.game_master_id = params[:user_id]
-        group.save!
+        group = Group.create!(permitted_params)
         # debugger
         render json: group, status: :created
     rescue ActiveRecord::RecordInvalid => err
@@ -57,7 +55,7 @@ class Api::GroupsController < ApplicationController
     private
 
     def permitted_params
-        params.permit(:name, :game_day, :game)
+        params.permit(:name, :game_day, :game, :game_master_id)
     end
 
 end

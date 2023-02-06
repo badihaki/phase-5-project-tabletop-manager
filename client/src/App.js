@@ -5,6 +5,7 @@ import { CharactersContext } from './components/context components/CharactersCon
 import { GroupsContext } from './components/context components/GroupsContext';
 import { MessagesContext } from './components/context components/MessagesContext';
 import { UserContext } from './components/context components/UserContext';
+import Home from './components/Home';
 import NavigationBar from './components/Navigation';
 
 function App() {

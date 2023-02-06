@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
+import LoadingInfo from "./LoadingInfo";
 import MembershipForm from "./MembershipForm";
 import SignUpLogIn from "./SignUpLogIn";
 
@@ -65,7 +66,7 @@ function GroupPage(){
 
     return(
         <div>
-            {groups? <GroupPageComponent /> : <SignUpLogIn />}
+            { groups? <GroupPageComponent /> : <LoadingInfo /> }
         </div>
     )
 

@@ -86,16 +86,30 @@ function Characters(){
         )
     }
 
-    const characterList = characters.map(toon=>{
-        if(toon != null){
-            return <CharacterSheet key={toon.id} toon={toon} />
+    // const characterList = characters.map(toon=>{
+    //     if(toon != null){
+    //         return <CharacterSheet key={toon.id} toon={toon} />
+    //     }
+    //     else{
+    //         console.error("WARNING no characters detected.")
+    //         console.log("Printing out character list...");
+    //         console.log(characters);
+    //     }
+    // })
+    const characterList = ()=>{
+        if(characters != null){
+            return characters.map(toon=>{
+                    if(toon != null){
+                        return <CharacterSheet key={toon.id} toon={toon} />
+                    }
+                    else{
+                        console.error("WARNING no characters detected.")
+                        console.log("Printing out character list...");
+                        console.log(characters);
+                    }
+                })
         }
-        else{
-            console.error("WARNING no characters detected.")
-            console.log("Printing out character list...");
-            console.log(characters);
-        }
-    })
+    }
 
     function handleSubmit(e){
         e.preventDefault();
@@ -143,6 +157,7 @@ function Characters(){
     }
 
     function CharacterComponent(){
+
         return(
             <div>
                 <h2>{user.name}'s Character Page</h2>

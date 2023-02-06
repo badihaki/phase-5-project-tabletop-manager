@@ -6,7 +6,7 @@ function NavigationBar(){
     const { user, setUser } = useContext(UserContext)
 
     function handleLogoutButton(){
-        fetch('/logout', {
+        fetch('/api/logout', {
             method: "DELETE"
         }).then(setUser(null));
     }
