@@ -4,7 +4,6 @@ import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
 import LoadingInfo from "./LoadingInfo";
 import MembershipForm from "./MembershipForm";
-import SignUpLogIn from "./SignUpLogIn";
 
 function GroupPage(){
     const { id } = useParams();
@@ -25,9 +24,27 @@ function GroupPage(){
             </div>
         )
     }
+
+    function MembershipComponent( { player, membership } ){
+        return(
+            <li key={player.id}>
+                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
+                <br />
+                Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
+                <br />
+                <br />
+            </li>
+        )
+    }
     
     function GroupPageComponent(){
         const group = groups.find( crew => crew.id == id );
+        const memberships = group.players.map(player=>{
+            const membership = group.memberships.find(m=>{
+                return m.player_id === player.id;
+            })
+            return(<MembershipComponent key={membership.id} player={player} membership={membership} />)
+        })
         return(
             <div>
                 <h2>{group.name}</h2>
@@ -40,20 +57,7 @@ function GroupPage(){
                 </p>
                     <h3>Members:</h3>
                 <ul>
-                    {group.players.map(player=>{
-                        const membership = group.memberships.find(m=>{
-                            return m.player_id === player.id;
-                        })
-                        return(
-                            <li key={player.id}>
-                                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
-                                <br />
-                                Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
-                                <br />
-                                <br />
-                            </li>
-                        )
-                    })}
+                    {memberships}
                 </ul>
                 <br />
                 <br />

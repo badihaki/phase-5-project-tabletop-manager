@@ -6,7 +6,7 @@ import GroupForm from "./NewGroupForm";
 
 function Groups(){
 
-    const { groups } = useContext(GroupsContext)
+    const { groups, memeberships } = useContext(GroupsContext)
     const { user } = useContext(UserContext)
 
     // const groupCards = groups.map( individualGroup=>{

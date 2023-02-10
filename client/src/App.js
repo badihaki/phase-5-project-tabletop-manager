@@ -11,7 +11,7 @@ import NavigationBar from './components/Navigation';
 function App() {
 
   const { user, setUser } = useContext( UserContext );
-  const { groups, setGroups } = useContext( GroupsContext );
+  const { groups, setGroups, setMemberships } = useContext( GroupsContext );
   const { messages, setMessages } = useContext( MessagesContext );
   const { characters, setCharacters } = useContext( CharactersContext );
 
@@ -38,7 +38,19 @@ function App() {
   }, [])
 
   useEffect(()=>{
-    if(user!=null){
+    if(groups != null){
+      fetch('api/memberships').then(r=>{
+        if(r.ok){
+          r.json().then( data=>{setMemberships(data); })}
+          else{
+            r.json().then(data=>console.log(data));
+          }
+      })
+    }
+  },[groups])
+
+  useEffect(()=>{
+    if(user != null){
       fetch('/api/group_messages').then(r=>{
         if(r.ok){
           r.json().then(data=>{setMessages(data)})
