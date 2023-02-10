@@ -7,7 +7,7 @@ import MembershipForm from "./MembershipForm";
 
 function GroupPage(){
     const { id } = useParams();
-    const { groups } = useContext(GroupsContext);
+    const { groups, memberships } = useContext(GroupsContext);
     const { user } = useContext(UserContext);
 
     
@@ -25,10 +25,10 @@ function GroupPage(){
         )
     }
 
-    function MembershipComponent( { player, membership } ){
+    function MembershipComponent( { membership } ){
         return(
-            <li key={player.id}>
-                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
+            <li key={membership.id}>
+                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{membership.player.name}</span>
                 <br />
                 Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
                 <br />
@@ -39,12 +39,22 @@ function GroupPage(){
     
     function GroupPageComponent(){
         const group = groups.find( crew => crew.id == id );
-        const memberships = group.players.map(player=>{
-            const membership = group.memberships.find(m=>{
-                return m.player_id === player.id;
-            })
-            return(<MembershipComponent key={membership.id} player={player} membership={membership} />)
+        // const memberships = group.players.map(player=>{
+        //     const membership = group.memberships.find(m=>{
+        //         return m.player_id === player.id;
+        //     })
+        //     return(<MembershipComponent key={membership.id} player={player} membership={membership} />)
+        // })
+
+        const membershipCards = memberships.filter(membership=>{
+            // debugger;
+            if(membership.group != null){
+                return membership.group.id == id;
+            }
+        }).map(membership=>{
+            return <MembershipComponent membership={membership} key={membership.id} />
         })
+
         return(
             <div>
                 <h2>{group.name}</h2>
@@ -57,7 +67,7 @@ function GroupPage(){
                 </p>
                     <h3>Members:</h3>
                 <ul>
-                    {memberships}
+                    {membershipCards}
                 </ul>
                 <br />
                 <br />
