@@ -38,3 +38,17 @@ Things you may want to cover:
 Start the Postgresql server: $ sudo service postgresql start
 Start rails server $ rails s
 Start npm server $ npm start --prefix client
+
+# To Do
+User:
+    - Can make a new user
+    - Can log in a user
+    - Clean up routes
+Groups:
+    - Can make a new group
+    - Can update a group
+    - Can delete a group INCLUDE all memberships and group messages associated with group
+    - Can join a group as a membership
+Group Messages
+    - Can send group messages
+    - Can stream new messages simultaneously between clients

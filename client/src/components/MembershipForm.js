@@ -9,12 +9,11 @@ function MembershipForm({ userId=0, groupId }){
         "player_experience_summary":"New Player"
     })
 
-    const { groups, setGroups } = useContext(GroupsContext);
+    const { memberships, setMemberships } = useContext(GroupsContext);
     const [ messages, setMessages ] = useState([""]);
 
     function handleSubmit(e){
         e.preventDefault();
-        // console.log(form);
         fetch('/api/memberships',{
             method: "POST",
             headers: {
@@ -24,36 +23,8 @@ function MembershipForm({ userId=0, groupId }){
         }).then(r=>{
             if(r.ok){
                 r.json().then(data=>{
-                    // const newGroup = [...groups];
-                    const newGroup = groups.map(group=>{
-                        if(group.id == groupId){
-                            console.log(data);
-                            console.log("group starts as: ");
-                            console.log(group);
-                            // console.log(group.memberships)
-                            group.memberships.push(data);
-                            group.players.push(data.player)
-                            // console.log(group.memberships)
-                            // memberships is being updated
-                            console.log("group ends up as: ");
-                            console.log(group);
-                            debugger;
-                        }
-                        return group;
-                    })
-                    debugger;
-                    setGroups(newGroup);
-                    // setGroups(newGroup.map(group=>{
-                    //     if(group.id == groupId){
-                    //         console.log(data);
-                    //         console.log(group.memberships)
-                    //         group.memberships.push(data);
-                    //         group.players.push(data.player)
-                    //         console.log(group.memberships)
-                    //         debugger;
-                    //     }
-                    // }))
-                    // setGroups(newGroup);
+                    const newMembershipList = [...memberships, data];
+                    setMemberships(newMembershipList);
                     setMessages([""]);
                     setForm({
                         "group_id":groupId,
