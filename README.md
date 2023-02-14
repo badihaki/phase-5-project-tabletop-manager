@@ -52,3 +52,7 @@ Groups:
 Group Messages
     - Can send group messages
     - Can stream new messages simultaneously between clients
+Characters
+    - Can update a character
+    - Can delete a character
+    - Error messages correctly show

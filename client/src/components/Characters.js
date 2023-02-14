@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CharactersContext } from "./context components/CharactersContext";
 import { UserContext } from "./context components/UserContext";
 import SignUpLogIn from "./SignUpLogIn";
@@ -6,12 +6,6 @@ import SignUpLogIn from "./SignUpLogIn";
 function Characters(){
     const { user } = useContext(UserContext);
     const { characters, setCharacters } = useContext(CharactersContext)
-
-    const [ newCharacterForm, setNewCharacterForm ] = useState({
-        "name":"",
-        "history":"",
-        "stats":""
-    })
     
     function UpdateForm( {toon} ){
         const [ updateForm, setUpdateForm ] = useState({
@@ -70,7 +64,7 @@ function Characters(){
     function CharacterSheet({ toon }){
         const [showForm, setShowForm] = useState(false);
         return(
-            <li key={toon.id}>
+            <li>
                 {toon.name} : <button name={toon.id} onClick={handleDeleteButton}>Delete</button>
                 <ul>
                     <li>Level: {toon.level}</li>
@@ -86,16 +80,6 @@ function Characters(){
         )
     }
 
-    // const characterList = characters.map(toon=>{
-    //     if(toon != null){
-    //         return <CharacterSheet key={toon.id} toon={toon} />
-    //     }
-    //     else{
-    //         console.error("WARNING no characters detected.")
-    //         console.log("Printing out character list...");
-    //         console.log(characters);
-    //     }
-    // })
     const characterList = ()=>{
         if(characters != null){
             return characters.map(toon=>{
@@ -110,31 +94,6 @@ function Characters(){
                 })
         }
     }
-
-    function handleSubmit(e){
-        e.preventDefault();
-        fetch("/characters",{
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify(newCharacterForm)
-        }).then(
-            r=>{
-                if(r.ok || r.created){
-                    r.json().then(data=>{
-                        setCharacters([...characters, data]);
-                    })
-                }
-            }
-        )
-        setNewCharacterForm({
-            "name":"",
-            "history":"",
-            "stats":"",
-            "level":1
-        })
-    }
     
     function handleDeleteButton(e){
         const toonID = e.target.name;
@@ -148,27 +107,50 @@ function Characters(){
         })
     }
 
-    function handleNewCharacterFormChange(e){
-        const key = e.target.name;
-        const value = e.target.value;
-        const newForm = {...newCharacterForm}
-        newForm[key] = value;
-        setNewCharacterForm(newForm);
-    }
+    function CharacterCreationForm(){
+        const [ newCharacterForm, setNewCharacterForm ] = useState({
+            "name":"",
+            "history":"",
+            "stats":""
+        })
 
-    function CharacterComponent(){
+        
+        function handleNewCharacterFormChange(e){
+            const key = e.target.name;
+            const value = e.target.value;
+            const newForm = {...newCharacterForm}
+            newForm[key] = value;
+            setNewCharacterForm(newForm);
+        }
+
+
+        function handleSubmit(e){
+            e.preventDefault();
+            fetch("/api/characters",{
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(newCharacterForm)
+            }).then(
+                r=>{
+                    if(r.ok || r.created){
+                        r.json().then(data=>{
+                            setCharacters([...characters, data]);
+                        })
+                    }
+                }
+            )
+            setNewCharacterForm({
+                "name":"",
+                "history":"",
+                "stats":"",
+                "level":1
+            })
+        }
 
         return(
-            <div>
-                <h2>{user.name}'s Character Page</h2>
-                List of characters:
-                <ul>
-                    {characterList}
-                </ul>
-                <div>
-                    Create new characters below:
-                    <br />
-                    <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                         Character name:
                         <br />
                         <input type={"text"} name={"name"} value={newCharacterForm.name} onChange={handleNewCharacterFormChange} />
@@ -185,6 +167,22 @@ function Characters(){
                         <button type="submit">Create Character</button>
                         <br />
                     </form>
+        )
+    }
+
+    function CharacterComponent(){
+
+        return(
+            <div>
+                <h2>{user.name}'s Character Page</h2>
+                List of characters:
+                <ul>
+                    {characterList()}
+                </ul>
+                <div>
+                    Create new characters below:
+                    <br />
+                    <CharacterCreationForm />
                 </div>
             </div>
         )

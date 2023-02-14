@@ -42,7 +42,6 @@ function App() {
       fetch('api/memberships').then(r=>{
         if(r.ok){
           r.json().then( data=>{
-            console.log(data);
             setMemberships(data); })}
           else{
             r.json().then(data=>console.log(data));
