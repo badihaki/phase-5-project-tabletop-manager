@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { CharactersContext } from "./context components/CharactersContext";
 import { UserContext } from "./context components/UserContext";
+import ErrorList from "./ErrorList";
 import SignUpLogIn from "./SignUpLogIn";
 
 function Characters(){
     const { user } = useContext(UserContext);
     const { characters, setCharacters } = useContext(CharactersContext)
+    const [ errors, setErrors ] = useState(null);
     
     function UpdateForm( {toon} ){
         const [ updateForm, setUpdateForm ] = useState({
@@ -23,7 +25,7 @@ function Characters(){
         }
         function handleUpdateFormSubmit(e){
             e.preventDefault();
-            fetch(`/characters/${toon.id}`,{
+            fetch(`/api/characters/${toon.id}`,{
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -97,7 +99,7 @@ function Characters(){
     
     function handleDeleteButton(e){
         const toonID = e.target.name;
-        fetch(`characters/${toonID}`,{
+        fetch(`/api/characters/${toonID}`,{
             method: "DELETE",
         }).then(()=>{
             const newToonList = characters.filter(toon=>{
@@ -137,6 +139,13 @@ function Characters(){
                     if(r.ok || r.created){
                         r.json().then(data=>{
                             setCharacters([...characters, data]);
+                            setErrors(null);
+                        })
+                    }
+                    else{
+                        r.json().then(data=>{
+                            setErrors(data.errors);
+                            // console.log(data.errors);
                         })
                     }
                 }
@@ -166,6 +175,7 @@ function Characters(){
                         <br />
                         <button type="submit">Create Character</button>
                         <br />
+                        <ErrorList errors={errors} />
                     </form>
         )
     }

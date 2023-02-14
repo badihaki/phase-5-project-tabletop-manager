@@ -44,15 +44,20 @@ User:
     - Can make a new user
     - Can log in a user
     - Clean up routes
+    - Incorporate Error component if needed
 Groups:
     - Can make a new group
     - Can update a group
     - Can delete a group INCLUDE all memberships and group messages associated with group
     - Can join a group as a membership
+    - Incorporate Error component if needed
 Group Messages
     - Can send group messages
     - Can stream new messages simultaneously between clients
+    - Incorporate Error component if needed
 Characters
-    - Can update a character
-    - Can delete a character
-    - Error messages correctly show
+    X Fix character form
+    X Can create a new character
+    X Can update a character
+    X Can delete a character
+    X Error messages correctly show
