@@ -41,10 +41,11 @@ Start npm server $ npm start --prefix client
 
 # To Do
 User:
-    - Can make a new user
-    - Can log in a user
+    X Can make a new user
+    X Can log in a user
     - Clean up routes
-    - Incorporate Error component if needed
+    - Show errors on login
+    X Incorporate Error component if needed
 Groups:
     - Can make a new group
     - Can update a group

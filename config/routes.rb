@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :characters
-    resources :group_messages, exclude: [:delete]
+    resources :characters, exclude: [:show]
+    resources :group_messages, exclude: [:delete]  
     resources :memberships
     resources :groups
     post '/signup', to: 'users#create'

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "./context components/UserContext";
+import ErrorList from "./ErrorList";
 
 function SignUpLogIn(){
 
@@ -11,13 +12,13 @@ function SignUpLogIn(){
         "password": "",
         "password_confirmation": ""
     })
-    const [ signUpMessages, setSignUpMessages ] = useState([""])
+    const [ signUpErrors, setSignUpErrors] = useState(null);
     const [ logInForm, setLogInForm ] = useState({
         "email": "",
         "password": ""
     })
-    const [ logInMessages, setLogInMessages ] = useState("")
-    
+    const [ successfulSignup, setSuccessfulSignup ] = useState(false);
+
     // Sign Up
     function handleSignUpForm(e){
         const targetName = e.target.name;
@@ -28,7 +29,6 @@ function SignUpLogIn(){
     }
     function submitSignUpForm(submitEvent){
         submitEvent.preventDefault();
-        // console.log(signUpForm);
         fetch('/api/signup', {
             method: "POST",
             headers: {
@@ -38,7 +38,8 @@ function SignUpLogIn(){
         }).then(r => {
             if(r.ok){
                 r.json().then( ()=>{
-                    setSignUpMessages(["Accepted. Please log in below"]);
+                    setSignUpErrors(null);
+                    setSuccessfulSignup(true);
                     clearSignUpForm();
                 })
             }
@@ -47,14 +48,11 @@ function SignUpLogIn(){
                     const errorArray = ['UH-OH!! We ran into a problem!!'];
                     for (const key in data.errors) {
                         for (const message of data.errors[key]) {
-                            // console.log('raw message?? vvv')
-                            // console.log(message)
                             errorArray.push(message)
                             clearSignUpForm();
                         }
                     }
-                    console.log(errorArray);
-                    setSignUpMessages(errorArray);
+                    setSignUpErrors(data.errors);
                 })
             }
         })
@@ -94,15 +92,6 @@ function SignUpLogIn(){
         })
     }
 
-    // Misc Elements
-    const signUpMessage = signUpMessages.map(message=>{
-        return(
-            <div key={message}>
-                {message}
-            </div>
-        )
-    })
-
     return(
         <div>
             <form onSubmit={submitSignUpForm}>
@@ -125,7 +114,9 @@ function SignUpLogIn(){
                 <input type={"password"} name={"password_confirmation"} onChange={handleSignUpForm} value={signUpForm.password_confirmation} />
                 <br />
                 <button type="submit" >Sign Up</button>
-                {signUpMessage}
+                <br />
+                {successfulSignup ? <div>Signed Up Successfully.<br />Please log in below :</div> : ""}
+                <ErrorList errors={signUpErrors} />
             </form>
             <br />
             <p>-OR-</p>
