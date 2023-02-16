@@ -13,6 +13,7 @@ function SignUpLogIn(){
         "password_confirmation": ""
     })
     const [ signUpErrors, setSignUpErrors] = useState(null);
+    const [ logInErrors, setLogInErrors ] = useState(null);
     const [ logInForm, setLogInForm ] = useState({
         "email": "",
         "password": ""
@@ -89,6 +90,11 @@ function SignUpLogIn(){
                     setUser(data);
                 })
             }
+            else{
+                r.json().then(data=>{
+                    setLogInErrors(data);
+                })
+            }
         })
     }
 
@@ -132,6 +138,7 @@ function SignUpLogIn(){
                 <input type={"password"} name={"password"} onChange={handleLogInForm} value={logInForm.password} />
                 <br />
                 <button type="submit" >Log In</button>
+                <ErrorList errors={logInErrors} />
             </form>
         </div>
     )

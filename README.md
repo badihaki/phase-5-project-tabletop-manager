@@ -43,15 +43,17 @@ Start npm server $ npm start --prefix client
 User:
     X Can make a new user
     X Can log in a user
-    - Clean up routes
-    - Show errors on login
+    X Clean up routes
+    X Show errors on login
     X Incorporate Error component if needed
 Groups:
-    - Can make a new group
+    X Can make a new group
+    - New groups need unique names
     - Can update a group
     - Can delete a group INCLUDE all memberships and group messages associated with group
     - Can join a group as a membership
-    - Incorporate Error component if needed
+    X Incorporate Error component if needed
+    - Creating a new group does not automatically add to users page. Needs a refresh!? ** Find out what updates user groups and add the new group to this when creating a new group, OR change where user's group list pulls from, EG pull from groups context instead of whatever it is now **
 Group Messages
     - Can send group messages
     - Can stream new messages simultaneously between clients

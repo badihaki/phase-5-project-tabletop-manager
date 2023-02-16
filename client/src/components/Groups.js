@@ -9,20 +9,6 @@ function Groups(){
     const { groups, memeberships } = useContext(GroupsContext)
     const { user } = useContext(UserContext)
 
-    // const groupCards = groups.map( individualGroup=>{
-    //     return(
-    //         <li key={individualGroup.id}>
-    //             <div >
-    //                 <h3>{individualGroup.name}</h3>
-    //                 Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
-    //                 <br />
-    //                 <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
-    //             </div>
-    //             <br />
-    //         </li>
-    //     )
-    // })
-
     function GroupCards(){
         if (groups.length <= 0){
             return (

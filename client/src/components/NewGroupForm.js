@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
 import { GroupsContext } from "./context components/GroupsContext";
 import { UserContext } from "./context components/UserContext";
+import ErrorList from "./ErrorList";
 
 function GroupForm(){
 
     const { user } = useContext(UserContext);
     const { groups, setGroups } = useContext(GroupsContext);
 
-    const [ messages, setMessages ] = useState([""]);
+    const [ submitSuccess, setSubmitSuccess ] = useState([""]);
+    const [ errorMessages, setErrorsMessages ] = useState(null);
 
-    const pageMessages = messages.map(message=>{
+    const pageMessages = submitSuccess.map(message=>{
         return(
             <div key={message}>
                 {message}
@@ -54,19 +56,13 @@ function GroupForm(){
                 r.json().then(data=>{
                     const newGroup = [...groups, data];
                     setGroups(newGroup);
-                    setMessages(["Group created"]);
+                    setSubmitSuccess(["Group created"]);
                 })
             }
             else{
                 r.json().then(data=>{
                     console.log(data);
-                    const errorArray = ['UH-OH!! We ran into a problem!!'];
-                    for (const key in data.errors) {
-                        for (const message of data.errors[key]) {
-                            errorArray.push(message)
-                        }
-                    }
-                    setMessages(errorArray);
+                    setErrorsMessages(data.errors);
                 })
             }
         })
@@ -104,6 +100,7 @@ function GroupForm(){
             <button type="submit">Submit</button>
             <br />
             {pageMessages}
+            <ErrorList errors={errorMessages} />
         </form>
     )
 }

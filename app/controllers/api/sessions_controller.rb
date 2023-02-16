@@ -9,9 +9,11 @@ class Api::SessionsController < ApplicationController
         if user&.authenticate(params[:password])
             session[:uid] = user.id
             render json: user, status: :accepted
+        else
+            render json: { Error: ["Password is incorrect"] }, status: :not_acceptable
         end
     rescue ActiveRecord::RecordNotFound => err
-        render json: {error: "User doesn't exist"}, status: :not_found
+        render json: { Error: ["User doesn't exist"] }, status: :not_found
         # check if the user is valid and authenticate the password using params
         # if everything checks out:
             # store the user id in sessions[:uid] and render the user to the frontend
