@@ -9,6 +9,8 @@ admin email & pass
 lookout@xoingzd.space // abc123
 dev emails:
 devX@xoingzd.space
+test emails:
+test@xoingzd.space // 111111
 
 # README
 
@@ -48,12 +50,15 @@ User:
     X Incorporate Error component if needed
 Groups:
     X Can make a new group
-    - New groups need unique names
-    - Can update a group
+    X New groups need unique names
+    X Can update a group
     - Can delete a group INCLUDE all memberships and group messages associated with group
-    - Can join a group as a membership
     X Incorporate Error component if needed
     - Creating a new group does not automatically add to users page. Needs a refresh!? ** Find out what updates user groups and add the new group to this when creating a new group, OR change where user's group list pulls from, EG pull from groups context instead of whatever it is now **
+Memberships:
+    X Can join a group as a membership
+    X When joining a group, it doesn't show up on the user page. Find out where the data is coming from, and make sure it is being updated when adding a membership
+        * data comes from user.groups (UserInfo.js, ln ~66)
 Group Messages
     - Can send group messages
     - Can stream new messages simultaneously between clients

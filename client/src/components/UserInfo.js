@@ -7,10 +7,10 @@ import MessageBoard from "./MessageBoard";
 
 function UserInfo(){
     const { user } = useContext(UserContext);
-    const { groups, setGroups } = useContext(GroupsContext);
+    const { groups, setGroups, memberships } = useContext(GroupsContext);
 
     function updateGroup(form){
-        fetch(`users/${user.id}/groups/${form.id}`,{
+        fetch(`/api/groups/${form.id}`,{
             method: "PATCH",
             headers:{
                 "Content-Type":"application/json"
@@ -19,18 +19,13 @@ function UserInfo(){
         }).then(r=>{
             if(r.ok || r.accepted){
                 r.json().then(data=>{
-                    //change data here
-                    // user.mastered_groups.map(group=>{
-                    //     if(group.id == data.id){
-                    //         group = data;
-                    //     }
-                    // })
                     const newGroupsList = [...groups];
-                    newGroupsList.map(group=>{
+                    setGroups(newGroupsList.map(group=>{
                         if(group.id == data.id){
-                            group = data;
+                            return group = data;
                         }
-                    })
+                        else return group;
+                    }))
                 })
             }
         })
@@ -67,6 +62,8 @@ function UserInfo(){
             </li>
         )
     })
+    
+    console.log(user.groups)
     const userGroups = user.groups.map(group=>{
         return(
             <li key={group.id}>

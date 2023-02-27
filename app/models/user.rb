@@ -2,10 +2,10 @@ class User < ApplicationRecord
     has_secure_password
 
     # Associations
-    has_many :memberships, foreign_key: :player_id
+    has_many :memberships, foreign_key: :player_id, dependent: :destroy
     has_many :groups, through: :memberships
     has_many :mastered_groups, foreign_key: :game_master_id, class_name: "Group"
-    has_many :characters
+    has_many :characters, dependent: :destroy
 
     # validations
     validates :name, presence: true, length: { in: 2..10 }

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GroupsContext } from "./context components/GroupsContext";
+import { UserContext } from "./context components/UserContext";
 
 function MembershipForm({ userId=0, groupId }){
 
@@ -9,6 +10,7 @@ function MembershipForm({ userId=0, groupId }){
         "player_experience_summary":"New Player"
     })
 
+    const { user, setUser } = useContext(UserContext);
     const { memberships, setMemberships } = useContext(GroupsContext);
     const [ messages, setMessages ] = useState([""]);
 
@@ -31,6 +33,9 @@ function MembershipForm({ userId=0, groupId }){
                         "player_id":userId,
                         "player_experience_summary":"New Player"
                     });
+                    const updatedUser = user;
+                    updatedUser.groups.push(data.group);
+                    setUser(updatedUser);
                 })
             }
             else{

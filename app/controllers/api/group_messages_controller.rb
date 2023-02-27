@@ -6,10 +6,8 @@ class Api::GroupMessagesController < ApplicationController
     end
 
     def create
-        # user = User.find_by(session[:uid])
         message = GroupMessage.create!(permitted_params)
         if(message.valid?)
-            # ActionCable.server.broadcast 'public_chat', message.content
             ActionCable.server.broadcast 'public_chat', message
             render json: message, status: :ok
         end
