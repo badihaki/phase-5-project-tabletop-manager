@@ -5,7 +5,7 @@ import ErrorList from "./ErrorList";
 
 function GroupForm(){
 
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const { groups, setGroups } = useContext(GroupsContext);
 
     const [ submitSuccess, setSubmitSuccess ] = useState([""]);
@@ -56,6 +56,9 @@ function GroupForm(){
                 r.json().then(data=>{
                     const newGroup = [...groups, data];
                     setGroups(newGroup);
+                    const updatedUser = {...user};
+                    updatedUser.mastered_groups.push(data);
+                    setUser(updatedUser);
                     setSubmitSuccess(["Group created"]);
                 })
             }

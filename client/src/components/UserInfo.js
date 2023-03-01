@@ -63,7 +63,6 @@ function UserInfo(){
         )
     })
     
-    console.log(user.groups)
     const userGroups = user.groups.map(group=>{
         return(
             <li key={group.id}>
