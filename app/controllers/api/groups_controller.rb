@@ -47,7 +47,7 @@ class Api::GroupsController < ApplicationController
         return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
         group = Group.find(params[:id])
         group.destroy
-        render json:{}, status: :accepted
+        return render json:{message: "group deleted successfully" }, status: :accepted
     rescue ActiveRecord::RecordNotFound
         render json: {error: "Data not found! Can't destroy a record that doesn't exist."}
     end

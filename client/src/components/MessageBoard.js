@@ -22,6 +22,7 @@ function MessageBoard(){
     })
 
     function addNewMessage(message){
+        // debugger
         const updatedMessageList = [...messages];
         let listNeedsToUpdate = true;
         for (let index = 0; index < updatedMessageList.length; index++) {
@@ -29,7 +30,7 @@ function MessageBoard(){
             if(element.id == message.id) 
             {
                 listNeedsToUpdate = false;
-                debugger;
+                // debugger;
                 break;
             }
         }
@@ -75,7 +76,7 @@ function MessageBoard(){
 
         function handleSubmit(event){
             event.preventDefault();
-            fetch("/group_messages", {
+            fetch("/api/group_messages", {
                 method: 'POST',
                 headers: {
                     "Content-Type":"application/json"
@@ -91,6 +92,7 @@ function MessageBoard(){
                 })
                 })
         }
+
         return(
             <div>
                 <GroupMessages group={group} user={user} messages={messages} setMessages={addNewMessage} />

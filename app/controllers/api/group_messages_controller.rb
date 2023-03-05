@@ -7,8 +7,19 @@ class Api::GroupMessagesController < ApplicationController
 
     def create
         message = GroupMessage.create!(permitted_params)
+        # message.user = User.find(message.user_id)
         if(message.valid?)
-            ActionCable.server.broadcast 'public_chat', message
+            message_to_broadcast = {
+                id: message.id,
+                content: message.content,
+                group_id: message.group_id,
+                user_id: message.user_id,
+                user: message.user
+            }
+            # debugger
+            # ActionCable.server.broadcast 'public_chat', message
+            ActionCable.server.broadcast 'public_chat', message_to_broadcast
+            # message.broadcast_message
             render json: message, status: :ok
         end
     end

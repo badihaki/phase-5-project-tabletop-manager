@@ -6,7 +6,7 @@ import GroupUpdateForm from "./GroupUpdateForm";
 import MessageBoard from "./MessageBoard";
 
 function UserInfo(){
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const { groups, setGroups, memberships } = useContext(GroupsContext);
 
     function updateGroup(form){
@@ -32,17 +32,23 @@ function UserInfo(){
     }
 
     function deleteGroup(group){
-        console.log(group);
-        fetch(`users/${user.id}/groups/${group.id}`,{
+        // console.log(group);
+        fetch(`/api/groups/${group.id}`,{
             method: "DELETE"
         }).then(r=>{
-            if(r.accepted){
+            if( r.statusText == "Accepted" ){
                 r.json().then(()=>{
-                    const newGroupsList = [...groups];
-                    newGroupsList.filter(listedGroup=>{
-                        return group.id != listedGroup.id
-                    });
+                    const newGroupsList = groups.filter(listedGroup=>{
+                        return group.id !== listedGroup.id
+                    })
                     setGroups(newGroupsList);
+
+                    const updatedUser = {...user};
+                    const updatedMasteredGroups = user.mastered_groups.filter(listenGroup=>{
+                        return group.id !== listenGroup.id;
+                    })
+                    updatedUser.mastered_groups = updatedMasteredGroups;
+                    setUser(updatedUser);
                 })
             }
         })

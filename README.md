@@ -52,7 +52,7 @@ Groups:
     X Can make a new group
     X New groups need unique names
     X Can update a group
-    - Can delete a group INCLUDE all memberships and group messages associated with group
+    X Can delete a group INCLUDE all memberships and group messages associated with group
     X Incorporate Error component if needed
     X Creating a new group does not automatically add to users page. Needs a refresh!? ** Find out what updates user groups and add the new group to this when creating a new group, OR change where user's group list pulls from, EG pull from groups context instead of whatever it is now **
 Memberships:

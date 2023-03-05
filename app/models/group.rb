@@ -3,6 +3,7 @@ class Group < ApplicationRecord
     belongs_to :game_master, class_name: "User"
     has_many :memberships, dependent: :destroy
     has_many :players, through: :memberships, source: :player
+    has_many :group_messages, dependent: :destroy
 
     # Validations
     validates :name, presence: true, uniqueness: true
