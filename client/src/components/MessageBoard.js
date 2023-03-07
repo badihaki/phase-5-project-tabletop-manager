@@ -5,6 +5,9 @@ import { MessagesContext } from "./context components/MessagesContext";
 import { UserContext } from "./context components/UserContext";
 import GroupMessages from "./GroupMessages";
 import Message from "./Message";
+import ActionCable, { ActionCableConsumer, ActionCableProvider } from 'react-actioncable-provider'
+import MessageUpdater from "./MessageUpdater";
+// import GroupMessageConnection from "./GroupMessagesConnection";
 
 function MessageBoard(){
     const {user} = useContext(UserContext);
@@ -50,19 +53,20 @@ function MessageBoard(){
                 return message.group_id == id;
             }).map(message=>{
                 // debugger;
-                /*
-                Put in new message component here!! vVv
-                */
                 return(
                     // <li key={message.id}>
                     //     {console.log(message)}
                     //     {message.content}
                     // </li>
-                    <Message message={message} />
+                    <Message key={message.id} message={message} />
                 )
             })
         }
     }
+
+   function handleRecieveBroadcast(data){
+    console.log(data);
+   }
 
     if(user != null && group != null){
 
@@ -83,7 +87,8 @@ function MessageBoard(){
                 },
                 body: JSON.stringify(messageForm)
             }).then(r=>r.json()).then(data =>{
-                // console.log(data);
+                console.log(data);
+                setMessages([...messages, data]);
                 setMessageForm({
                     "content":"",
                     "user_id": user.id,
@@ -93,26 +98,67 @@ function MessageBoard(){
                 })
         }
 
-        return(
-            <div>
-                <GroupMessages group={group} user={user} messages={messages} setMessages={addNewMessage} />
-                <br />
-                <br />
-                <ul>
-                    {groupMessages()}
-                </ul>
-                <form onSubmit={handleSubmit}>
-                    <h4>New Message:</h4>
-                    <div>Posting as <span style={{ fontWeight:"bold" }}>{user.name}</span></div>
-                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={messageForm.content} onChange={handleFormChange} />
+        // const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+        // const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+
+//        return(
+//            <ActionCableProvider url="ws://localhost:3000/cable" >
+//                <div>
+//                    <ActionCableConsumer
+//                    channel={{channel: "GroupChatChannel", username: user.name}}
+//                    onConnected={()=>{
+//                        // console.log("connected")
+//                    }}
+//                    onDisconected={()=>{
+//                        console.log("disconnected")
+//                    }}
+//                    onReceived={handleRecieveBroadcast}
+//                    />
+//                        {/* <GroupMessages group={group} user={user} messages={messages} setMessages={addNewMessage} /> */}
+//                        <br />
+//                        <br />
+//                        <ul>
+//                            {/* groupMessages() */}
+//                        </ul>
+//                            { groupMessages() }
+//                        <form onSubmit={handleSubmit}>
+//                            <h4>New Message:</h4>
+//                            <div>Posting as <span style={{ fontWeight:"bold" }}>{user.name}</span></div>
+//                            <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={messageForm.content} onChange={handleFormChange} />
+//                            <br />
+//                            <br />
+//                            <button type="submit">Submit</button>
+//                        </form>
+//                        <br />
+//                        <br />
+//                        <Link to={"/dashboard"}> Back </Link>
+//                </div>
+//            </ActionCableProvider>
+//        )
+return(
+                <div>
+                    {/* <GroupMessages messageList={groupMessages()} username={user.name} setMessages={addNewMessage} /> */}
                     <br />
                     <br />
-                    <button type="submit">Submit</button>
-                </form>
-                <br />
-                <br />
-                <Link to={"/dashboard"}> Back </Link>
-            </div>
+                    <ul>
+                        {/* groupMessages() */}
+                    </ul>
+                        { groupMessages() }
+                    <br />
+                    <MessageUpdater />
+                    <br />
+                    <form onSubmit={handleSubmit}>
+                        <h4>New Message:</h4>
+                        <div>Posting as <span style={{ fontWeight:"bold" }}>{user.name}</span></div>
+                        <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={messageForm.content} onChange={handleFormChange} />
+                        <br />
+                        <br />
+                        <button type="submit">Submit</button>
+                    </form>
+                    <br />
+                    <br />
+                    <Link to={"/dashboard"}> Back </Link>
+                </div>
         )
     }
     else{

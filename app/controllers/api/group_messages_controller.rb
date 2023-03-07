@@ -17,8 +17,8 @@ class Api::GroupMessagesController < ApplicationController
                 user: message.user
             }
             # debugger
-            # ActionCable.server.broadcast 'public_chat', message
-            ActionCable.server.broadcast 'public_chat', message_to_broadcast
+            ActionCable.server.broadcast 'public_chat', message
+            # ActionCable.server.broadcast 'public_chat', message_to_broadcast
             # message.broadcast_message
             render json: message, status: :ok
         end
