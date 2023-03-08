@@ -1,3 +1,3 @@
 class GroupMessageSerializer < ActiveModel::Serializer
-  attributes :id, :group_id, :comment_id, :content, :user
+  attributes :id, :group_id, :comment_id, :content, :user, :replies
 end

@@ -21,6 +21,7 @@ import MessageBoard from './components/MessageBoard';
 import { MessagesProvider } from './components/context components/MessagesContext';
 import { CharactersProvider } from './components/context components/CharactersContext';
 import Characters from './components/Characters';
+import MessageThread from './MessageThread';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/characters",
         element: <Characters />
+      },
+      {
+        path: "/messages/:id/",
+        element: <MessageThread />
       }
     ],
   },

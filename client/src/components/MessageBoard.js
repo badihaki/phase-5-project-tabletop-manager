@@ -87,7 +87,6 @@ function MessageBoard(){
                 },
                 body: JSON.stringify(messageForm)
             }).then(r=>r.json()).then(data =>{
-                console.log(data);
                 setMessages([...messages, data]);
                 setMessageForm({
                     "content":"",
