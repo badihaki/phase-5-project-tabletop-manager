@@ -10,6 +10,7 @@ function MessageUpdater(){
         setDisableButton(true);
         fetch("/api/group_messages/").then(r=>r.json()).then(
             data => {
+                console.log(data)
                 setMessages(data);
             }
         ).then(()=>setDisableButton(false))

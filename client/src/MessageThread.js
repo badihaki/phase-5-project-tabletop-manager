@@ -22,7 +22,8 @@ function MessageThread(){
                 "content": "",
                 "user_id": user.id,
                 "group_id": message().group_id,
-                "quoted_comment_id": id
+                "quoted_comment_id": id,
+                "comment_id": id
             })
     
             function handleSubmit(e){
@@ -40,7 +41,8 @@ function MessageThread(){
                         "content": "",
                         "user_id": user.id,
                         "group_id": message().group_id,
-                        "quoted_comment_id": id
+                        "quoted_comment_id": id,
+                        "comment_id": id
                     })
                     })
             }
@@ -63,10 +65,24 @@ function MessageThread(){
             )
         }
 
+        console.log(message().replies)
+
+        function Comment({ message }){
+            return(
+                <div>
+                    <Link to={`/messages/${message.id}`}>{message.content}</Link>
+                </div>
+            )
+        }
+
+        // const replies = message().replies.map(reply=>{
+        //     return <Comment key={reply.id} message={reply} />
+        // })
+
         const replies = messages.filter(message=>{
-            return message.quoted_comment == id;
-        }).map(message=>{
-            <Message key={message.id} />
+            return message.quoted_comment_id == id
+        }).map(reply=>{
+            return <Comment key={reply.id} message={reply} />
         })
 
         return(
@@ -74,8 +90,10 @@ function MessageThread(){
                 <span style={{ fontWeight:"bold", fontSize:"25px" }}>{message().user.name}</span> says:
                 <br />
                 <br />
-                {message.content}
+                {message().content}
                 <br />
+                <br />
+                <span style={{ fontWeight:"bold", fontSize:"20px" }}>Replies:</span>
                 {replies}
                 <br />
                 <CommentForm />
