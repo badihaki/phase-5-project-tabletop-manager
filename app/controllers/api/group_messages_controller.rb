@@ -21,8 +21,7 @@ class Api::GroupMessagesController < ApplicationController
 #            # ActionCable.server.broadcast 'public_chat', message_to_broadcast
 #            # message.broadcast_message
 #        end
-        message.quoted_comment = GroupMessage.find(params[:quoted_comment_id])
-        debugger
+        # debugger
         message.save!
         render json: message, status: :created
     rescue ActiveRecord::RecordInvalid => err

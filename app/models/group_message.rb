@@ -2,7 +2,7 @@ class GroupMessage < ApplicationRecord
     after_create_commit { broadcast_message }
     
     # Associations
-    has_many :replies, class_name: "GroupMessage", foreign_key: "comment_id"
+    has_many :replies, class_name: "GroupMessage", foreign_key: "comment_id", dependent: :destroy
     belongs_to :quoted_comment, class_name: "GroupMessage", optional: true
     belongs_to :user
     belongs_to :group
@@ -10,6 +10,7 @@ class GroupMessage < ApplicationRecord
     # Validations
     validates :group_id, presence: true
     validates :user_id, presence: true
+    validates :content, presence: true
 
     private
 

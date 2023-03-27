@@ -51,6 +51,9 @@ function MessageBoard(){
         else{
             return messages.filter(message=>{
                 return message.group_id == id;
+            }).filter(message=>{
+                console.log(message);
+                if(message.quoted_comment_id == null) return message;
             }).map(message=>{
                 // debugger;
                 return(

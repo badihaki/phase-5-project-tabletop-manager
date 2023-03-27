@@ -65,8 +65,6 @@ function MessageThread(){
             )
         }
 
-        console.log(message().replies)
-
         function Comment({ message }){
             return(
                 <div>
