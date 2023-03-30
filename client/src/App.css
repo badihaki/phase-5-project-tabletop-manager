@@ -1,5 +1,12 @@
+body {
+  background-color: rgb(221, 207, 176);
+}
+
 .App {
-  text-align: center;
+  padding: 2rem 4rem;
+  width: 100%;
+  top: 0%;
+  background-image: linear-gradient(rgb(239, 240, 235),rgb(230, 215, 230),rgb(221, 207, 176));
 }
 
 .App > div {
@@ -7,38 +14,73 @@
   flex-flow: column nowrap;
   align-items: center;
 }
- .detail {
-  flex: 1;
-  padding: 2rem 4rem;
-  width: 100%;
-  position: absolute;
-  top: 0%;
-}
 
 .sidebar {
   width: 22rem;
-  background-color: #f7f7f7;
-  border-right: solid 1px #e3e3e3;
-  display: flex;
-  flex-direction: column;
+  background-color: rgb(231, 208, 114);
   z-index: 1;
-  position: relative;
-}
-
-.sidebar > * {
-  padding-left: 2rem;
-  padding-right: 2rem;
-  flex: 1;
-  overflow: auto;
-  padding-top: 1rem;
+  position: fixed;
+  text-align: justify;
+  border-radius: 35%;
+  border: rgb(130, 118, 206);
+  border-style: dashed;
 }
 
 .sidebar ul {
-  padding: 0;
-  margin: 0;
+  margin: 4;
   list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar li {
   margin: 0.25rem 0;
+  padding: 3px;
+}
+
+.sidebar a:link {
+  color: rgb(#0c031b);
+  font-weight: 500;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.sidebar a:visited {
+  color: rgb(#724dac);
+}
+
+.sidebar a:hover {
+  color: rgb(#e1d7f0);
+}
+
+.sidebar a:active {
+  color: rgb(#1014fc);
+  font-size: 23px;
+}
+
+.sidebar button {
+  background-color: antiquewhite;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 25%;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 900;
+  font-style: oblique;
+  color: #0c031b;
+}
+
+#detail {
+  text-align: center;
+  position: relative;
+  right: 10px;
+  bottom: 30px;
+}
+
+h1 {
+  font-weight: bolder;
+  color: #0c031b;
+  background-image: linear-gradient(rgb(220, 220, 238),rgb(206, 186, 206));
+  border-radius: 55%;
 }

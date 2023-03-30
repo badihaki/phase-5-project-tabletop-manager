@@ -184,7 +184,7 @@ function Characters(){
 
         return(
             <div>
-                <h2>{user.name}'s Character Page</h2>
+                <h1>{user.name}'s Character Page</h1>
                 List of characters:
                 <ul>
                     {characterList()}
@@ -198,8 +198,18 @@ function Characters(){
         )
     }
 
+    function NotLoggedInComponent(){
+        return(
+            <div>
+                Error: Not signed in
+                <br />
+                <SignUpLogIn />
+            </div>
+        )
+    }
+
     return(
-        user? <CharacterComponent /> : <SignUpLogIn />
+        user? <CharacterComponent /> : <NotLoggedInComponent />
     )
 }
 

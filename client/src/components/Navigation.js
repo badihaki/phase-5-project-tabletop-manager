@@ -18,7 +18,7 @@ function NavigationBar(){
                     <Link to={"/home"}> Home </Link>
                 </li>
                 <li>
-                    <Link to={"/dashboard"}> User </Link>
+                    <Link to={"/dashboard"}> { user? "Dashboard" : "Login / Signup" } </Link>
                 </li>
                 <li>
                     <Link to={"/groups"}> Groups </Link>

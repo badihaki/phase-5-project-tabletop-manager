@@ -81,7 +81,7 @@ function App() {
   return (
     <div className="App">
         <NavigationBar />
-        <div className='detail'>
+        <div id='detail'>
           <Outlet />
         </div>
     </div>
