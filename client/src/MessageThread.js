@@ -67,7 +67,7 @@ function MessageThread(){
 
         function Comment({ message }){
             return(
-                <div>
+                <div className="message">
                     <Link to={`/messages/${message.id}`}>{message.content}</Link>
                 </div>
             )

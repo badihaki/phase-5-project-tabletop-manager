@@ -17,12 +17,12 @@ body {
 
 .sidebar {
   width: 22rem;
-  background-color: rgb(231, 208, 114);
+  background-color: rgb(243, 227, 164);
+  border: rgb(130, 118, 206);
   z-index: 1;
   position: fixed;
   text-align: justify;
   border-radius: 35%;
-  border: rgb(130, 118, 206);
   border-style: dashed;
 }
 
@@ -55,11 +55,12 @@ body {
 
 .sidebar a:active {
   color: rgb(#1014fc);
-  font-size: 23px;
+  font-size: 20px;
 }
 
 .sidebar button {
-  background-color: antiquewhite;
+  position: relative;
+  background-color: rgb(220, 220, 238);
   border: none;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -69,6 +70,12 @@ body {
   font-weight: 900;
   font-style: oblique;
   color: #0c031b;
+  transition: 0.15s;
+}
+.sidebar button:hover {
+  font-size: 18px;
+  color: rgb(#0c031b);
+  transition: 0.35s;
 }
 
 #detail {
@@ -83,4 +90,27 @@ h1 {
   color: #0c031b;
   background-image: linear-gradient(rgb(220, 220, 238),rgb(206, 186, 206));
   border-radius: 55%;
+}
+
+.group {
+  border-color: #cdcee4;
+  border-style: ridge;
+  border-width: 10px;
+  border-radius: 25px;
+  background-image: linear-gradient(#f5e9df,rgb(253, 222, 136));
+  margin-bottom: 20px;
+  padding-bottom: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+}
+
+.message {
+  background-image: linear-gradient(#fdfaf4, #f5e7c8);
+  border-radius: 25px;
+  margin: 25px;
+}
+.message button {
+  border-color: #faf6f1;
+  border-radius: 15px;
 }

@@ -57,7 +57,7 @@ function UserInfo(){
     const masteredGroups = user.mastered_groups.map(group=>{
         function handleDeleteButton(){deleteGroup(group)}
         return(
-            <li key={group.id}>
+            <li key={group.id} className={"group"}>
                 <span style={{fontWeight:'bold'}}>{group.name}</span> <button onClick={handleDeleteButton}>Delete Group</button>
                 <br />
                 <GroupUpdateForm updateFunction={updateGroup} group={group} />
@@ -71,7 +71,7 @@ function UserInfo(){
     
     const userGroups = user.groups.map(group=>{
         return(
-            <li key={group.id}>
+            <li key={group.id} className={"group"} >
                 <span style={{fontWeight:'bold'}}>{group.name}</span>
                 <br />
                 <Link to={`/groups/${group.id}/messages`}>Check the Board!</Link>

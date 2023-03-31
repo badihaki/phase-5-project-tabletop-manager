@@ -18,14 +18,11 @@ function Groups(){
         else{
             return groups.map( individualGroup=>{
                     return(
-                        <li key={individualGroup.id}>
-                            <div >
-                                <h3>{individualGroup.name}</h3>
-                                Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
-                                <br />
-                                <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
-                            </div>
+                        <li key={individualGroup.id} className={"group"} >
+                            <h3>{individualGroup.name}</h3>
+                            Game Master: <span style={{fontWeight:'bold'}}>{individualGroup.game_master.name}</span>
                             <br />
+                            <Link to={`/groups/${individualGroup.id}`}>{individualGroup.name}'s Full Info</Link>
                         </li>
                     )
         } )
