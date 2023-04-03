@@ -4,7 +4,7 @@ class User < ApplicationRecord
     # Associations
     has_many :memberships, foreign_key: :player_id, dependent: :destroy
     has_many :groups, through: :memberships
-    has_many :mastered_groups, foreign_key: :game_master_id, class_name: "Group"
+    has_many :mastered_groups, foreign_key: :game_master_id, class_name: "Group", dependent: :destroy
     has_many :characters, dependent: :destroy
 
     # validations

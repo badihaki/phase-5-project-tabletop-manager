@@ -3,9 +3,9 @@ import React from "react";
 function Home(){
     return(
         <div>
-            <h1> Homepage </h1>
+            <h1> The Group Manager </h1>
             <p>
-                Welcome to the homepage
+                An online tool for managing groups of table-top gamers. Start a group. Stay in contact. Play forever.
             </p>
         </div>
     )

@@ -3,9 +3,8 @@ class Api::GroupsController < ApplicationController
     def index
         # debugger
         if(params[:user_id])
-            return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+            check_if_logged_in
             user = User.find(params[:user_id])
-            # debugger
             render json: user.groups, status: :ok
         else
             render json: Group.all, status: :ok
@@ -14,7 +13,7 @@ class Api::GroupsController < ApplicationController
 
     def show
         if(params[:user_id])
-            return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+            check_if_logged_in
             user = User.find(session[:uid])
             render json: user.groups, status: :ok
         else
@@ -24,17 +23,17 @@ class Api::GroupsController < ApplicationController
     end
 
     def create
-        return render json: {error: "Not authorized to do this, please sign in"}, status: :unauthorized unless session.include?(:uid)
+        check_if_logged_in
         group = Group.create!(permitted_params)
-        # debugger
         render json: group, status: :created
     rescue ActiveRecord::RecordInvalid => err
         render json: {errors: err.record.errors}, status: :unprocessable_entity
     end
 
     def update
-        return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
-        group = Group.find(params[:id])
+        check_if_logged_in
+        group = find_group_by_id
+        gm_authorization_check
         group.update!(permitted_params)
         render json: group, status: :accepted
     rescue ActiveRecord::RecordInvalid => err
@@ -44,8 +43,9 @@ class Api::GroupsController < ApplicationController
     end
 
     def destroy
-        return render json: {error: "Not authorized to view this, please sign in"}, status: :unauthorized unless session.include?(:uid)
-        group = Group.find(params[:id])
+        check_if_logged_in
+        group = find_group_by_id
+        gm_authorization_check
         group.destroy
         return render json:{message: "group deleted successfully" }, status: :accepted
     rescue ActiveRecord::RecordNotFound
@@ -56,6 +56,18 @@ class Api::GroupsController < ApplicationController
 
     def permitted_params
         params.permit(:name, :game_day, :game, :game_master_id)
+    end
+
+    def check_if_logged_in
+        return render json: {error: "Not authorized to view this, please sign up or log in"}, status: :unauthorized unless session.include?(:uid)
+    end
+
+    def gm_authorization_check
+        return render json: {error: "Not authorized to edit/delete this group."}, status: :unauthorized unless session[:uid] == group.game_master.id
+    end
+
+    def find_group_by_id
+        return Group.find(params[:id])
     end
 
 end

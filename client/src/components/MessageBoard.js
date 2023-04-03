@@ -194,7 +194,7 @@ function MessageBoard(){
 
     return(
         <div>
-            { user? <MessageBoardComponent /> : <NotLoggedInComponent /> }
+            { messages? <MessageBoardComponent /> : <NotLoggedInComponent /> }
         </div>
     )
 }

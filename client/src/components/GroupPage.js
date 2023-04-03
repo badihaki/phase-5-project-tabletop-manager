@@ -36,6 +36,14 @@ function GroupPage(){
             </li>
         )
     }
+
+    function NoMembersComponent(){
+        return(
+            <div>
+                No members yet
+            </div>
+        )
+    }
     
     function GroupPageComponent(){
         const group = groups.find( crew => crew.id == id );
@@ -67,7 +75,7 @@ function GroupPage(){
                 </p>
                     <h3>Members:</h3>
                 <ul>
-                    {membershipCards}
+                    { memberships.length > 0 ? membershipCards : <NoMembersComponent /> }
                 </ul>
                 <br />
                 <br />
@@ -80,7 +88,7 @@ function GroupPage(){
 
     return(
         <div>
-            { groups? <GroupPageComponent /> : <LoadingInfo /> }
+            { memberships? <GroupPageComponent /> : <LoadingInfo /> }
         </div>
     )
 

@@ -39,7 +39,7 @@ function App() {
 
   useEffect(()=>{
     if(groups != null){
-      fetch('api/memberships').then(r=>{
+      fetch('/api/memberships').then(r=>{
         if(r.ok){
           r.json().then( data=>{
             setMemberships(data); })}
