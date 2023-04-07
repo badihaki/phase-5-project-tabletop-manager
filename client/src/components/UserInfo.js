@@ -31,21 +31,32 @@ function UserInfo(){
         })
     }
 
-    function deleteGroup(group){
-        // console.log(group);
+    function setGroupActivity(group){
         fetch(`/api/groups/${group.id}`,{
-            method: "DELETE"
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "is_active" : !group.is_active
+            })
         }).then(r=>{
             if( r.statusText == "Accepted" ){
-                r.json().then(()=>{
-                    const newGroupsList = groups.filter(listedGroup=>{
-                        return group.id !== listedGroup.id
+                r.json().then((data)=>{
+                    const newGroupsList = groups.map(listedGroup=>{
+                        if(data.id == listedGroup.id){
+                            return listedGroup = data;
+                        }
+                        else return listedGroup;
                     })
                     setGroups(newGroupsList);
 
                     const updatedUser = {...user};
-                    const updatedMasteredGroups = user.mastered_groups.filter(listenGroup=>{
-                        return group.id !== listenGroup.id;
+                    const updatedMasteredGroups = user.mastered_groups.map(listedGroup=>{
+                        if(group.id == listedGroup.id){
+                            return listedGroup = data;
+                        }
+                        else return listedGroup
                     })
                     updatedUser.mastered_groups = updatedMasteredGroups;
                     setUser(updatedUser);
@@ -55,10 +66,12 @@ function UserInfo(){
     }
 
     const masteredGroups = user.mastered_groups.map(group=>{
-        function handleDeleteButton(){deleteGroup(group)}
+        function handleActivityButton(){setGroupActivity(group)}
+
+        if(group.is_active == true){
         return(
             <li key={group.id} className={"group"}>
-                <span style={{fontWeight:'bold'}}>{group.name}</span> <button onClick={handleDeleteButton}>Delete Group</button>
+                <span style={{fontWeight:'bold'}}>{group.name}</span> <button onClick={handleActivityButton}>Deactivate Group</button>
                 <br />
                 <GroupUpdateForm updateFunction={updateGroup} group={group} />
                 <br />
@@ -67,6 +80,20 @@ function UserInfo(){
                 <br />
             </li>
         )
+    }
+    else{
+        return(
+            <li key={group.id} className={"group"} >
+                <span style={{fontWeight:'bold'}}>{group.name}</span>
+                <br />
+                <div className="error">Group is inactive</div>
+                <br />
+                <button onClick={handleActivityButton}>
+                    Activate Group
+                </button>
+            </li>
+        )
+    }
     })
     
     const userGroups = user.groups.map(group=>{

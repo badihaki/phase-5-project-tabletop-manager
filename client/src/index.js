@@ -18,7 +18,6 @@ import Groups from './components/Groups';
 import { GroupsProvider } from './components/context components/GroupsContext';
 import GroupPage from './components/GroupPage';
 import MessageBoard from './components/MessageBoard';
-import { MessagesProvider } from './components/context components/MessagesContext';
 import { CharactersProvider } from './components/context components/CharactersContext';
 import Characters from './components/Characters';
 import MessageThread from './MessageThread';
@@ -74,11 +73,9 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <GroupsProvider>
-        <MessagesProvider>
-          <CharactersProvider>
-            <RouterProvider router={router} />
+        <CharactersProvider>
+          <RouterProvider router={router} />
           </CharactersProvider>
-        </MessagesProvider>
       </GroupsProvider>
     </UserProvider>
   </React.StrictMode>

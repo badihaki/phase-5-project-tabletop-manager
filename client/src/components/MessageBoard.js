@@ -1,19 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+// import GroupMessages from "./GroupMessages";
+// import ActionCable, { ActionCableConsumer, ActionCableProvider } from 'react-actioncable-provider'
+// import GroupMessageConnection from "./GroupMessagesConnection";
 import { GroupsContext } from "./context components/GroupsContext";
-import { MessagesContext } from "./context components/MessagesContext";
 import { UserContext } from "./context components/UserContext";
-import GroupMessages from "./GroupMessages";
 import Message from "./Message";
-import ActionCable, { ActionCableConsumer, ActionCableProvider } from 'react-actioncable-provider'
 import MessageUpdater from "./MessageUpdater";
 import SignUpLogIn from "./SignUpLogIn";
-// import GroupMessageConnection from "./GroupMessagesConnection";
 
 function MessageBoard(){
     const {user} = useContext(UserContext);
-    const {groups} = useContext(GroupsContext);
-    const {messages, setMessages} = useContext(MessagesContext);
+    const {groups, setGroups} = useContext(GroupsContext);
     const {id} = useParams();
 
     function MessageBoardComponent(){
@@ -34,9 +32,9 @@ function MessageBoard(){
             "group_id": id,
             "comment_id":""
         })
-    
+
+        /* // add new message funct
         function addNewMessage(message){
-            // debugger
             const updatedMessageList = [...messages];
             let listNeedsToUpdate = true;
             for (let index = 0; index < updatedMessageList.length; index++) {
@@ -54,33 +52,28 @@ function MessageBoard(){
             }
             // debugger;
         }
+        */
     
         const groupMessages = ()=>{
-            if(messages.length <= 0){
+            if(group.group_messages.length <= 0){
                 return (<li key={"noId"}>No mesaages</li>)
             }
             else{
-                return messages.filter(message=>{
-                    return message.group_id == id;
-                }).filter(message=>{
-                    console.log(message);
+                return group.group_messages.filter(message=>{
                     if(message.quoted_comment_id == null) return message;
                 }).map(message=>{
-                    // debugger;
                     return(
-                        // <li key={message.id}>
-                        //     {console.log(message)}
-                        //     {message.content}
-                        // </li>
                         <Message key={message.id} message={message} />
                     )
                 })
             }
         }
     
+        /* // handle recieve broadcast funct...
        function handleRecieveBroadcast(data){
         console.log(data);
        }
+       */
     
         if(user != null && group != null){
     
@@ -101,7 +94,21 @@ function MessageBoard(){
                     },
                     body: JSON.stringify(messageForm)
                 }).then(r=>r.json()).then(data =>{
-                    setMessages([...messages, data]);
+                    //
+                    //
+                    //
+                    const updatedGroup = group;
+                    group.group_messages.push(data);
+                    const newGroupList = groups.map(listedGroup=>{
+                        if(group.id == listedGroup.id){
+                            return listedGroup = group;
+                        }
+                        else{
+                            return listedGroup;
+                        }
+                    })
+                    setGroups(newGroupList);
+                    // setMessages([...messages, data]);
                     setMessageForm({
                         "content":"",
                         "user_id": user.id,
@@ -194,7 +201,7 @@ function MessageBoard(){
 
     return(
         <div>
-            { messages? <MessageBoardComponent /> : <NotLoggedInComponent /> }
+            { groups? <MessageBoardComponent /> : <NotLoggedInComponent /> }
         </div>
     )
 }

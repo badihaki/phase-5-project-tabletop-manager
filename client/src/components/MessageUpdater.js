@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
-import { MessagesContext } from "./context components/MessagesContext";
+import { GroupsContext } from "./context components/GroupsContext";
 
 function MessageUpdater(){
-    const { messages, setMessages } = useContext(MessagesContext);
+    const { setGroups } = useContext(GroupsContext);
     const [ disabledButton, setDisableButton ] = useState(false);
 
     function handleButtonClick(e){
         e.preventDefault();
         setDisableButton(true);
-        fetch("/api/group_messages/").then(r=>r.json()).then(
+        fetch("/api/groups/").then(r=>r.json()).then(
             data => {
                 console.log(data)
-                setMessages(data);
+                setGroups(data);
             }
         ).then(()=>setDisableButton(false))
     }

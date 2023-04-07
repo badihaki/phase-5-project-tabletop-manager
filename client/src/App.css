@@ -114,3 +114,9 @@ h1 {
   border-color: #faf6f1;
   border-radius: 15px;
 }
+
+.error {
+  color: rgb(167, 1, 1);
+  font-weight: bolder;
+  font-size: 18px;
+}

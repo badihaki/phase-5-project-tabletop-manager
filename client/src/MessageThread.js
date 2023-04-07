@@ -1,107 +1,110 @@
 import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { MessagesContext } from "./components/context components/MessagesContext";
+import { GroupsContext } from "./components/context components/GroupsContext";
 import { UserContext } from "./components/context components/UserContext";
-import Message from "./components/Message";
 
-function MessageThread(){
+function MessageThread({ message }){
     const { id } = useParams();
     const { user } = useContext(UserContext);
-    const { messages, setMessages } = useContext(MessagesContext);
-    const message = ()=>{
-        if(messages!=null){
-            return messages.find( data=> data.id == id);
-        }
-        else return null;
-    }
+    const { groups, setGroups } = useContext(GroupsContext);
+    // const message = ()=>{
+    //     if(messages!=null){
+    //         return messages.find( data=> data.id == id);
+    //     }
+    //     else return null;
+    // }
+    // find a way to bring back message without it being null. then bring back replies. reincorporate both
+    console.log(groups);
     
     function ThreadComponent(){
         
         function CommentForm(){
-            const [ replyForm, setReplyForm ] = useState({
+            const [ commentForm, setCommentForm ] = useState({
                 "content": "",
                 "user_id": user.id,
-                "group_id": message().group_id,
-                "quoted_comment_id": id,
-                "comment_id": id
+                "group_id": message.group_id,
+                "quoted_comment_id": message.id,
+                "comment_id": message.id
             })
     
-            function handleSubmit(e){
+            function handleCommentFormSubmit(e){
                 e.preventDefault();
-                console.log(replyForm)
+                // console.log(replyForm)
                 fetch("/api/group_messages", {
                     method: 'POST',
                     headers: {
                         "Content-Type":"application/json"
                     },
-                    body: JSON.stringify(replyForm)
+                    body: JSON.stringify(commentForm)
                 }).then(r=>r.json()).then(data =>{
-                    setMessages([...messages, data]);
-                    setReplyForm({
+                    console.log(data);
+                    const newGroupsList = groups.map(group=>{
+                        if(group.id == data.group_id){
+                            group.group_messages.push(data);
+                        }
+                        return group;
+                    })
+                    debugger;
+                    setCommentForm({
                         "content": "",
                         "user_id": user.id,
-                        "group_id": message().group_id,
+                        "group_id": message.group_id,
                         "quoted_comment_id": id,
                         "comment_id": id
                     })
-                    })
+                    setGroups(newGroupsList);
+                    });
             }
     
-            function handleFormChange(e){
+            function handleCommentFormChange(e){
                 const key = e.target.name;
                 const value = e.target.value;
-                const newForm = {...replyForm};
+                const newForm = {...commentForm};
                 newForm[key] = value;
-                setReplyForm(newForm);
+                setCommentForm(newForm);
             }
 
             return(
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleCommentFormSubmit}>
                     <div>Replying as <span style={{ fontWeight:"bold", fontSize: "18px" }}>{user.name}</span></div>
-                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={replyForm.content} onChange={handleFormChange} />
+                    <input type={"text"} name={"content"} style={{width: '300px', height: '100px'}} value={commentForm.content} onChange={handleCommentFormChange} />
                     <br />
                     <button type={"submit"}>Submit</button>
                 </form>
             )
         }
 
-        function Comment({ message }){
+        function Comment({ comment }){
             return(
                 <div className="message">
-                    <Link to={`/messages/${message.id}`}>{message.content}</Link>
+                    {comment.content}
                 </div>
             )
         }
 
-        // const replies = message().replies.map(reply=>{
+        const replies = message.replies.map(reply=>{
+            return <Comment key={reply.id} comment={reply} />
+        })
+
+        // const replies = messages.filter(message=>{
+        //     return message.quoted_comment_id == id
+        // }).map(reply=>{
         //     return <Comment key={reply.id} message={reply} />
         // })
 
-        const replies = messages.filter(message=>{
-            return message.quoted_comment_id == id
-        }).map(reply=>{
-            return <Comment key={reply.id} message={reply} />
-        })
-
         return(
             <div>
-                <span style={{ fontWeight:"bold", fontSize:"25px" }}>{message().user.name}</span> says:
-                <br />
-                <br />
-                {message().content}
-                <br />
-                <br />
                 <span style={{ fontWeight:"bold", fontSize:"20px" }}>Replies:</span>
                 {replies}
                 <br />
                 <CommentForm />
                 <br />
-                <Link to={`/groups/${message().group_id}/messages`}>Back</Link>
+                <Link to={`/groups/${message.group_id}/messages`}>Back</Link>
             </div>
         )
     }
     
-    if(message()!=null){
+    if(message != null){
         return(<ThreadComponent />)
     }
     else{

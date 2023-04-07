@@ -24,7 +24,9 @@ class Api::GroupsController < ApplicationController
 
     def create
         check_if_logged_in
-        group = Group.create!(permitted_params)
+        group = Group.new(permitted_params)
+        group.is_active = false
+        group.save
         render json: group, status: :created
     rescue ActiveRecord::RecordInvalid => err
         render json: {errors: err.record.errors}, status: :unprocessable_entity
@@ -33,7 +35,7 @@ class Api::GroupsController < ApplicationController
     def update
         check_if_logged_in
         group = find_group_by_id
-        gm_authorization_check
+        gm_authorization_check(group)
         group.update!(permitted_params)
         render json: group, status: :accepted
     rescue ActiveRecord::RecordInvalid => err
@@ -45,7 +47,7 @@ class Api::GroupsController < ApplicationController
     def destroy
         check_if_logged_in
         group = find_group_by_id
-        gm_authorization_check
+        gm_authorization_check(group)
         group.destroy
         return render json:{message: "group deleted successfully" }, status: :accepted
     rescue ActiveRecord::RecordNotFound
@@ -55,14 +57,14 @@ class Api::GroupsController < ApplicationController
     private
 
     def permitted_params
-        params.permit(:name, :game_day, :game, :game_master_id)
+        params.permit(:name, :game_day, :game, :game_master_id, :is_active)
     end
 
     def check_if_logged_in
         return render json: {error: "Not authorized to view this, please sign up or log in"}, status: :unauthorized unless session.include?(:uid)
     end
 
-    def gm_authorization_check
+    def gm_authorization_check group
         return render json: {error: "Not authorized to edit/delete this group."}, status: :unauthorized unless session[:uid] == group.game_master.id
     end
 

@@ -13,3 +13,12 @@ In order to run this project, fork and clone this repository, cd to directory, a
 Start the Postgresql server: $ sudo service postgresql start
 Start rails server $ rails s
 Start npm server $ npm start --prefix client
+
+# Todo
+- Groups get all info needed
+    - refactor all scripts needing Message Context
+    - GroupContext doesn't need memberships
+    - No need to filter info if each group gets it's own info, go through and reformat scripts using groups
+    - Where should I look to take out Message Context:
+        x Message Board
+        - Message Thread "/messages/:id/"

@@ -7,10 +7,9 @@ import MembershipForm from "./MembershipForm";
 
 function GroupPage(){
     const { id } = useParams();
-    const { groups, memberships } = useContext(GroupsContext);
+    const { groups } = useContext(GroupsContext);
     const { user } = useContext(UserContext);
 
-    
     function FormContainer(){
         return(
             <div>
@@ -25,10 +24,10 @@ function GroupPage(){
         )
     }
 
-    function MembershipComponent( { membership } ){
+    function MembershipComponent( { player, membership } ){
         return(
-            <li key={membership.id}>
-                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{membership.player.name}</span>
+            <li>
+                Player: <span style={{fontWeight:"bold", fontSize:"20px"}}>{player.name}</span>
                 <br />
                 Experience: <span style={{fontWeight:"bold"}}>{membership.player_experience_summary}</span>
                 <br />
@@ -54,14 +53,17 @@ function GroupPage(){
         //     return(<MembershipComponent key={membership.id} player={player} membership={membership} />)
         // })
 
-        const membershipCards = memberships.filter(membership=>{
-            // debugger;
-            if(membership.group != null){
-                return membership.group.id == id;
+        const membershipCards = ()=>{
+            if(group != null){
+                return group.players.map(player=>{
+                    const playerMembership = group.memberships.find(membership=>{return membership.player_id == player.id})
+                    return <MembershipComponent player={player} membership={playerMembership} key={player.id} />
+                })
             }
-        }).map(membership=>{
-            return <MembershipComponent membership={membership} key={membership.id} />
-        })
+            else{
+                return <div>No Members yet</div>
+            }
+        }
 
         return(
             <div>
@@ -75,7 +77,7 @@ function GroupPage(){
                 </p>
                     <h3>Members:</h3>
                 <ul>
-                    { memberships.length > 0 ? membershipCards : <NoMembersComponent /> }
+                    { group.players.length > 0 ? membershipCards() : <NoMembersComponent /> }
                 </ul>
                 <br />
                 <br />
@@ -88,7 +90,7 @@ function GroupPage(){
 
     return(
         <div>
-            { memberships? <GroupPageComponent /> : <LoadingInfo /> }
+            { groups? <GroupPageComponent /> : <LoadingInfo /> }
         </div>
     )
 
